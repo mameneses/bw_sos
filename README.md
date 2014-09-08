@@ -1,4 +1,4 @@
-bw_sos
+BABY WORLD - special orders system
 ======
 
-rails app for Baby World to manage their special orders from clients
+A rails application for Baby World, a small business, to manage their special orders from customers.
