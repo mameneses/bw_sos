@@ -1,0 +1,50 @@
+<% if @customer %>
+<h2> Order  for <%= @customer.first_name %> <%= @customer.last_name %> </h2>
+<div class="row">
+  <div class="col-lg-3">
+    <h3> Order Info </h3>
+    <%= button_to "Edit Order", edit_order_path(@order), method: :get%>
+    <p> Place by: <%= @order.placed_by %> </p>
+    <p> Date placed: <%= @order.placed_date %> </p>
+    <p> Follow up date: <%= @order.follow_up_date %> </p>
+  </div>
+  <div class="col-lg-3">
+    <h3>Products</h3>
+    <% @order.products.each do |product| %>
+    <div>
+      <label>Company:</label><%=product.company %><br>
+      <label>Model:</label><%=product.model_type %><br>
+      <label>Description:</label><%=product.description %><br>
+      <label>Price: $</label><%=product.price %><br>
+    </div>
+    <% end %>
+  </div>
+  <div class="col-lg-3">
+    <p> Items total: <%= @order.items_total %> </p>
+    <p> Tax: <%= @order.tax %> </p>
+    <p> Total w/ tax: <%= @order.total_with_tax %> </p>
+    <p> Delivery: <%= @order.delivery %> </p>
+    <p> Assembly: <%= @order.assembly %> </p>
+    <p> Grand total: <%= @order.grand_total %> </p>
+    <p> Deposit: <%= @order.deposit %> </p>
+    <p> Balance due: <%= @order.balance_due %> </p>
+    <p> Notes: <%= @order.notes %> </p>
+    <p> Complete: <%= @order.complete %> </p>
+
+    <h3>Gift Info</h3>
+    <p> Purchased by <%= @order.purchased_by %> </p>
+    <p> Gift Note: <%= @order.gift_note %> </p>
+  </div>
+  <div class="col-lg-3">
+    <h3>Address Info </h3>
+    <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
+    <p><%= "#{@customer.address}" %></p>
+    <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
+
+    <h3>Contact Info</h3>
+    <p>Main Phone: <%= "#{@customer.phone_num}" %> </p>
+    <p>Alternate Phone: <%="#{@customer.alt_phone_num}" %></p>
+    <p>Email: <%="#{@customer.email}" %></p>
+
+    <% end %>
+  </div>

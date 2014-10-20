@@ -1,0 +1,35 @@
+<h2>Create New Customer</h2>
+
+<%= form_for @customer, url: {action:"create"} do |f| %>
+  <%= f.label :first_name %>:
+  <%= f.text_field :first_name %><br />
+
+  <%= f.label :last_name %>:
+  <%= f.text_field :last_name %><br />
+  <br />
+
+  <%= f.label :address %>:
+  <%= f.text_field :address %><br />
+
+  <%= f.label :city %>:
+  <%= f.text_field :city %><br />
+
+  <%= f.label :state %>:
+  <%= f.text_field :state %><br />
+
+  <%= f.label :zip_code %>:
+  <%= f.number_field :zip_code %><br />
+  <br />
+
+  <%= f.label :phone_num %>:
+  <%= f.number_field :phone_num %><br />
+
+  <%= f.label :alt_phone_num %>:
+  <%= f.number_field :alt_phone_num %><br />
+<br />
+  <%= f.label :email %>:
+  <%= f.text_field :email %><br />
+
+  <%= f.submit %>
+
+<% end %>

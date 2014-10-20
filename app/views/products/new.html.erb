@@ -1,0 +1,20 @@
+
+<h3> Add new product </h3>
+
+<%= form_for @product, url: {action: "create"} do |f| %>
+
+<%= f.label :company %>:
+<%= f.text_field :company %><br />
+
+<%= f.label :model_type %>:
+<%= f.text_field :model_type %><br />
+
+<%= f.label :description %>:
+<%= f.text_field :description %><br />
+
+<%= f.label :price %>:
+<%= f.text_field :price %><br />
+
+<%= f.submit %>
+
+<% end %>

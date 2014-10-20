@@ -1,0 +1,60 @@
+<h2> Create your order for  <%= "#{@customer.first_name}" %> <%= "#{@customer.last_name}" %> </h2>
+
+<%= form_for @order, url: {action:"create"} do |f| %>
+  <%= f.label :placed_by %>:
+  <%= f.text_field :placed_by, value: "#{@user.first_name}" %><br />
+
+  <%= f.label :placed_date%>:
+  <%= f.date_select :placed_date, value: "#{Time.now.asctime}"  %><br />
+
+  <%= f.label :follow_up_date %>:
+  <%= f.date_select :follow_up_date, value: "#{Time.now.asctime}"%><br />
+
+  <%= f.text_field :customer_id, type: "hidden", value: "#{@customer.id.to_i}" %>
+
+  <%= f.label :items_total %>:
+  <%= f.text_field :items_total, value: "0" %><br />
+
+  <%= f.label :tax %>:
+  <%= f.number_field :tax, value: "0" %><br />
+
+  <%= f.label :total_with_tax %>:
+  <%= f.number_field :total_with_tax, value: "0" %><br />
+
+  <%= f.label :delivery %>:
+  <%= f.number_field :delivery, value: "0" %><br />
+
+  <%= f.label :assembly %>:
+  <%= f.text_field :assembly, value: "0" %><br />
+
+  <%= f.label :grand_total %>:
+  <%= f.text_field :grand_total, value: "0" %><br />
+
+  <%= f.label :deposit %>:
+  <%= f.text_field :deposit, value: "0" %><br />
+
+  <%= f.label :balance_due %>:
+  <%= f.text_field :balance_due, value: "0" %><br />
+
+  <%= f.label :notes %>:
+  <%= f.text_area :notes, value:"none" %><br />
+
+  <%= f.label :purchased_by %>:
+  <%= f.text_field :purchased_by %><br />
+
+  <%= f.label :gift_note %>:
+  <%= f.text_area :gift_note %><br />
+
+  <%= f.label :complete %>:
+  <%= f.select :complete, ["yes", "no"], value: "no" %><br />
+
+  <%= f.submit %>
+
+<% end %>
+
+
+
+
+
+
+

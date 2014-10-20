@@ -1,0 +1,29 @@
+<h2>All Customers</h2>
+<div class="row">
+  <div class="col-sm-9">
+    <%= form_tag(customers_path, method: "get") do %>
+      <%= label_tag(:q, "Search for Customer:") %>
+      <%= text_field_tag(:q) %>
+      <%= submit_tag("Search") %>
+    <% end %>
+
+    <% @customers.each do |customer| %>
+    <br>
+
+    <%= link_to(customer) do %>
+      <strong><%= customer.first_name %> <%= customer.last_name %></strong> 
+    <% end %>
+    Address: 
+    <%= customer.address %>
+    <%= customer.city %>
+    <%= customer.state %>
+    Phone: 
+    <%=customer.phone_num %>
+    <br>
+    <% end %>
+  </div>
+  <div class="col-sm-3">
+    <button> <%= link_to "Create new Customer", new_customer_path %>
+    </button>
+  </div>
+</div>

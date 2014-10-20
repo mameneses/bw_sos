@@ -1,0 +1,35 @@
+<h2>Edit <%= "#{@customer.last_name}" %></h2>
+
+<%= form_for @customer, url: {action:"update"} do |f| %>
+  <%= f.label :first_name %>:
+  <%= f.text_field :first_name, value: "#{@customer.first_name}" %><br />
+
+  <%= f.label :last_name %>:
+  <%= f.text_field :last_name, value: "#{@customer.last_name}" %><br />
+<br />
+
+  <%= f.label :address %>:
+  <%= f.text_field :address, value: "#{@customer.address}" %><br />
+
+  <%= f.label :city %>:
+  <%= f.text_field :city, value: "#{@customer.city}" %><br />
+
+  <%= f.label :state %>:
+  <%= f.text_field :state, value: "#{@customer.state}" %><br />
+
+  <%= f.label :zip_code %>:
+  <%= f.text_field :zip_code, value: "#{@customer.zip_code}" %><br />
+  <br />
+
+  <%= f.label :phone_num %>:
+  <%= f.text_field :phone_num, value: "#{clean_up_phone(@customer.phone_num)}" %><br />
+
+  <%= f.label :alt_phone_num %>:
+  <%= f.text_field :alt_phone_num, value: "#{@customer.alt_phone_num}" %><br />
+
+  <%= f.label :email %>:
+  <%= f.text_field :email, value: "#{@customer.email}" %><br />
+
+  <%= f.submit %>
+
+<% end %>

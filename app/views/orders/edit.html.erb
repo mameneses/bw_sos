@@ -1,0 +1,78 @@
+<h2> Edit your order for  <%= "#{@customer.first_name}" %> <%= "#{@customer.last_name}" %> </h2>
+<div class="row">
+<div class="col-md-5">
+  <%= render "products/new", object: @order %>
+    <div id ="order-products">
+    <% if @products %>
+    <h3> Current Products </h3>
+      <% @products.each do |product| %>
+        <ul>
+          <li><%= product.company %></li>
+          <li><%= product.model_type %></li>
+          <li><%= product.description%></li>
+          <li><%= product.price %></li>
+        </ul>
+        <%= form_for product, method: :delete do |f| %>
+          <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+          <%= f.submit value: "Delete" %>
+        <% end %> 
+      <% end %>
+      <%else%>
+      <h3> No Products in Order </h3>
+    <% end %>
+    </div>
+    </div>
+  <div class="col-md-5">
+    <%= form_for @order, url: {action: "update"} do |f| %>
+      <%= f.label :placed_by %>:
+      <%= f.text_field :placed_by, value: "#{@order.placed_by}" %><br />
+
+      <%= f.label :placed_date%>:
+      <%= f.date_select :placed_date, value: "#{Time.now.asctime}"  %><br />
+
+      <%= f.label :follow_up_date %>:
+      <%= f.date_select :follow_up_date, value: "#{@order.follow_up_date}"%><br />
+
+      <%= f.text_field :customer_id, type: "hidden", value: "#{@customer.id.to_i}" %>
+
+      <%= f.label :items_total %>:
+      <%= f.text_field :items_total, value: "#{order_total(@products)}" %><br />
+
+      <%= f.label :tax %>:
+      <%= f.number_field :tax, value: "#{tax(@products)}" %><br />
+
+      <%= f.label :total_with_tax %>:
+      <%= f.number_field :total_with_tax, value: "#{total_w_tax(@products)}" %><br />
+
+      <%= f.label :delivery %>:
+      <%= f.number_field :delivery, value: "#{@order.delivery}" %><br />
+
+      <%= f.label :assembly %>:
+      <%= f.text_field :assembly, value: "#{@order.assembly}" %><br />
+
+      <%= f.label :grand_total %>:
+      <%= f.text_field :grand_total, value: "#{grand_total(@order, @products)}" %><br />
+
+      <%= f.label :deposit %>:
+      <%= f.text_field :deposit, value: "#{@order.deposit}" %><br />
+
+      <%= f.label :balance_due %>:
+      <span class="add-on">$</span>
+      <%= f.text_field :balance_due, value: "#{balance_due(@order,@products, @order.deposit)}" %><br />
+
+      <%= f.label :notes %>:
+      <%= f.text_area :notes, value: "#{@order.notes}" %><br />
+
+      <%= f.label :purchased_by %>:
+      <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %><br />
+
+      <%= f.label :gift_note %>:
+      <%= f.text_area :gift_note, value: "#{@order.gift_note}" %><br />
+
+      <%= f.label :complete %>:
+      <%= f.select :complete, ["yes", "no"], value:"#{@order.complete}" %><br/>
+
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>

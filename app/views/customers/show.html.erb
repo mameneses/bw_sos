@@ -1,0 +1,48 @@
+
+<% if @customer %>
+  <div class="row" >
+    <div class="col-sm-4">
+    <h2><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></h2>
+    <form action="/orders/new" method="get"> 
+  <input type="hidden" name="customer_id" value=<%="#{@customer.id}"%>>
+  <button type="submit"> Add new order </button>
+  </form>
+  <%= button_to "Edit Info", edit_customer_path(@customer), method: :get %>
+    </div>
+    <div class="col-sm-4">
+      <h3>Address Info </h3>
+      <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
+      <p><%= "#{@customer.address}" %></p>
+      <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Contact Info</h3>
+      <p>Main Phone: <%= "#{@customer.phone_num}" %> </p>
+      <p>Alternate Phone: <%="#{@customer.alt_phone_num}" %></p>
+      <p>Email: <%="#{@customer.email}" %></p>
+    </div>
+  </div>
+<% end %>
+
+<h3> Orders </h3>
+<% @orders.each do |order| %>
+    <%= link_to (edit_order_path(order)) do %>
+      <button>
+        <p>Date placed: <%= "#{order.placed_date}" %> </p>
+        <p>Follow up: <%= "#{order.follow_up_date}" %> </p>
+        <p>Products: </p>
+        <% order.products.each do |product| %>
+          <%= "#{product.company}" %>
+          <%= "#{product.model_type}" %>
+        <% end %>
+        <br>
+      </button>
+    <% end %>
+<% end %>
+<br>
+<%= button_to "Delete Customer",{ controller: :customers, action: :destroy }, class: "btn btn-danger", method: :delete  %>
+
+
+
+
+
