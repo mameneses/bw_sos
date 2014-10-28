@@ -1,28 +1,38 @@
 <h2> Edit your order for  <%= "#{@customer.first_name}" %> <%= "#{@customer.last_name}" %> </h2>
 <div class="row">
-<div class="col-md-5">
-  <%= render "products/new", object: @order %>
-    <div id ="order-products">
-    <% if @products %>
-    <h3> Current Products </h3>
-      <% @products.each do |product| %>
-        <ul>
-          <li><%= product.company %></li>
-          <li><%= product.model_type %></li>
-          <li><%= product.description%></li>
-          <li><%= product.price %></li>
-        </ul>
-        <%= form_for product, method: :delete do |f| %>
-          <%= f.hidden_field :order_id, value: "#{@order.id}" %>
-          <%= f.submit value: "Delete" %>
+  <div class="col-md-2">
+    <%= render "products/new", object: @order %>
+  </div>
+  <div class="col-md-6" id ="order-products">
+    <% if @products.length >= 1 %>
+      <h3> Current Products </h3>
+      <table class="table table-striped">
+        <tr>
+          <th>Company</th>
+          <th>Model</th>
+          <th>Description</th>
+          <th>Price</th>
+        </tr>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%=product.company %></td>
+            <td><%=product.model_type %></td>
+            <td><%=product.description %></td>
+            <td>$<%=product.price %></td>
+            <%= form_for product, method: :delete do |f| %>
+            <td>
+              <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+              <%= f.submit value: "Delete" %>
+              <% end %>
+            </td>
+          </tr>
         <% end %> 
-      <% end %>
-      <%else%>
+      </table>
+    <%else%>
       <h3> No Products in Order </h3>
     <% end %>
-    </div>
-    </div>
-  <div class="col-md-5">
+  </div>
+  <div class="col-md-4">
     <%= form_for @order, url: {action: "update"} do |f| %>
       <%= f.label :placed_by %>:
       <%= f.text_field :placed_by, value: "#{@order.placed_by}" %><br />
@@ -36,41 +46,43 @@
       <%= f.text_field :customer_id, type: "hidden", value: "#{@customer.id.to_i}" %>
 
       <%= f.label :items_total %>:
-      <%= f.text_field :items_total, value: "#{order_total(@products)}" %><br />
+      <%=  "$ #{@order.items_total}" %><br />
 
       <%= f.label :tax %>:
-      <%= f.number_field :tax, value: "#{tax(@products)}" %><br />
+      <%= "$ #{@order.tax}" %><br />
 
       <%= f.label :total_with_tax %>:
-      <%= f.number_field :total_with_tax, value: "#{total_w_tax(@products)}" %><br />
+      <%= "$ #{@order.total_with_tax}" %><br />
 
       <%= f.label :delivery %>:
+      <span class="add-on">$</span>
       <%= f.number_field :delivery, value: "#{@order.delivery}" %><br />
 
       <%= f.label :assembly %>:
+      <span class="add-on">$</span>
       <%= f.text_field :assembly, value: "#{@order.assembly}" %><br />
 
       <%= f.label :grand_total %>:
-      <%= f.text_field :grand_total, value: "#{grand_total(@order, @products)}" %><br />
+      <%= "$ #{@order.grand_total}" %><br />
 
       <%= f.label :deposit %>:
+      <span class="add-on">$</span>
       <%= f.text_field :deposit, value: "#{@order.deposit}" %><br />
 
       <%= f.label :balance_due %>:
-      <span class="add-on">$</span>
-      <%= f.text_field :balance_due, value: "#{balance_due(@order,@products, @order.deposit)}" %><br />
+      <%= "$ #{@order.balance_due}" %><br />
 
-      <%= f.label :notes %>:
+      <%= f.label :notes %>:<br>
       <%= f.text_area :notes, value: "#{@order.notes}" %><br />
 
       <%= f.label :purchased_by %>:
       <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %><br />
 
-      <%= f.label :gift_note %>:
+      <%= f.label :gift_note %>: <br>
       <%= f.text_area :gift_note, value: "#{@order.gift_note}" %><br />
 
       <%= f.label :complete %>:
-      <%= f.select :complete, ["yes", "no"], value:"#{@order.complete}" %><br/>
+      <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %><br/>
 
       <%= f.submit %>
     <% end %>

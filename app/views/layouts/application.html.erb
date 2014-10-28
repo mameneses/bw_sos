@@ -11,14 +11,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<nav>
-  
-    <ul>
-      
-    </ul>
-  
-</nav>
-
+<% if user_signed_in? %>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -32,9 +25,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-<% if user_signed_in? %>
             <li><%= link_to "Customers", customers_path %> </li> 
             <li><%= link_to "Orders", orders_path %></li>
+            <li><%= link_to "Products", products_path %></li>
             <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
           </ul>
         </div>
@@ -45,7 +38,10 @@
 
 <%= yield %>
 <% else %>
-  <%= render "devise/sessions/new" %> 
+  <div>
+  <h1> Baby World - Special Orders System </h1>
+    <%= render "devise/sessions/new" %> 
+  </div>
 <% end %>
 
 </body>

@@ -32,6 +32,9 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     @order.update(order_params)
+    g_total = @order.total_with_tax + @order.delivery + @order.assembly
+    b_due = g_total - @order.deposit
+    @order.update(grand_total: g_total, balance_due: b_due )
     redirect_to "/orders/#{params[:id]}"
   end
 

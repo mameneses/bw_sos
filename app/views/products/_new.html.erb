@@ -3,21 +3,26 @@
 
 <%= form_for @product, as: :product, url: products_path, method: :post do |f| %>
 
-<%= f.label :company %>:
+<%= f.label :company %>:<br>
 <%= f.text_field :company %><br />
 
-<%= f.label :model_type %>:
+<%= f.label :model_type %>:<br>
 <%= f.text_field :model_type %><br />
 
-<%= f.label :description %>:
+<%= f.label :description %>:<br>
 <%= f.text_field :description %><br />
 
-<%= f.label :price %>:
+<%= f.label :price %>:<br>
 <%= f.text_field :price %><br />
 
 <%= f.hidden_field :order_id, value: "#{@order.id}" %>
-
+<br>
 <%= f.submit %>
 
 <% end %>
+<% if @product.valid? == false %>
+  <% @product.errors.each do |error| %>
+    <%= error %>
+  <% end %>
+<% end %> 
 </div>

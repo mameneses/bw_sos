@@ -32,6 +32,8 @@ gem 'devise'
 
 gem 'fuzzily'
 
+gem "dynamic_form"
+
 gem 'wicked_pdf'
 
 # Use unicorn as the app server
