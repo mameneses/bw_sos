@@ -1,8 +1,43 @@
+<% if params[:q] %>
+<h3> Products from <%= "#{params[:q]}" %> </h3>
+<% else %>
 <h3>All Product</h3>
-<% @products.each do |product| %>
-  <%= product.company %>
-  <%= product.model_type %>
-  <%= product.description%>
-  <%= product.price %>
-  <br>
 <% end %>
+<%= form_tag(products_path, method: "get") do %>
+      <%= label_tag(:q, "Search for Products:") %>
+      <%= text_field_tag(:q) %>
+      <%= submit_tag("Search") %>
+<% end %>
+<br>
+<table class="table table-striped">
+  <tr>
+    <th>Company</th>
+    <th>Model</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Orders</th>
+  </tr>
+<% @products.each do |product| %>
+  <tr>
+    <td><%= product.company %></td>
+    <td><%= product.model_type %></td>
+    <td><%= product.description%></td>
+    <td><%= product.price %></td>
+    <% orders = product.orders %>
+      <% if orders.length > 0 %>
+        <% orders.each do |order| %>
+          <% if order.complete != true %>
+            <td>
+              <%= link_to(order) do %>
+                <%= order.customer.first_name %> <%= order.customer.last_name %> 
+              <% end %>
+            </td>
+          <% end %>
+        <% end %>
+      <% else %>
+        <td> No Order </td>
+      <% end %>
+  </tr>
+<% end %>
+</table>
+
