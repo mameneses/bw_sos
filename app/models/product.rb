@@ -2,6 +2,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :customers
   has_and_belongs_to_many :orders
   validates :price, presence: true
+  before_create :capitalize
   before_destroy :update_order_remove_item
 
   def update_order_remove_item
@@ -14,6 +15,10 @@ class Product < ActiveRecord::Base
       b_due = g_total - @order.deposit
       @order.update(items_total: total, tax: tax, total_with_tax: total_w_tax, grand_total: g_total, balance_due: b_due)
     end
+  end
+
+  def capitalize
+    self.company = self.company.capitalize
   end
 
 end

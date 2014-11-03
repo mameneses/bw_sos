@@ -6,7 +6,16 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    @products = @order.products
     @customer = @order.customer
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ReceiptPdf.new(@customer, @order, @products)
+        send_data pdf.render, filename: "#{@customer.first_name}_#{@customer.last_name}_Receipt_#{@order.placed_date}.pdf", type: 'applicaiton/pdf'
+      end
+    end
   end
 
   def new 

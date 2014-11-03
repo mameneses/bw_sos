@@ -36,6 +36,10 @@ gem "dynamic_form"
 
 gem 'wicked_pdf'
 
+gem 'prawn'
+
+gem 'prawn-table'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

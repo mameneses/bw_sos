@@ -7,21 +7,27 @@
       <%= submit_tag("Search") %>
     <% end %>
 
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+      </tr>
     <% @customers.each do |customer| %>
-    <br>
-
-    <%= link_to(customer) do %>
-      <strong><%= customer.first_name %> <%= customer.last_name %></strong> 
-    <% end %>
-    Address: 
-    <%= customer.address %>
-    <%= customer.city %>
-    <%= customer.state %>
-    Phone: 
-    <%=customer.phone_num %>
+      <tr>
+        <td>
+        <%= link_to(customer) do %>
+          <strong><%= customer.first_name %> <%= customer.last_name %></strong> 
+        <% end %>
+        </td>
+        <td><%= customer.address %> <%= customer.city %> <%= customer.state %></td> 
+        <td><%=customer.phone_num %></td>
+        </tr>
     <br>
     <% end %>
+    </table>
   </div>
+
   <div class="col-sm-3">
     <button> <%= link_to "Create new Customer", new_customer_path %>
     </button>

@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
 
   def index
     if params[:q]
-      @customers = Customer.where(first_name: params[:q].capitalize).concat(Customer.where(last_name: params[:q].capitalize)).uniq
+      @customers = Customer.where("first_name LIKE ?", "%#{params[:q].capitalize}%").concat(Customer.where("last_name LIKE ?", "%#{params[:q].capitalize}%")).uniq
     else
       @customers = Customer.order(created_at: :desc).first(15)
     end

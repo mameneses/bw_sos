@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   
    def index
       if params[:q]
-      @products = Product.where(company: params[:q]).order(created_at: :desc)
+      @products = Product.where("company LIKE ?", "%#{params[:q]}%").order(created_at: :desc)
       else
       @products = Product.order(created_at: :desc).first(15)
       end
