@@ -23,10 +23,10 @@
     </div>
   </div>
 <% end %>
-
+<div class="row">
 <h3> Orders </h3>
 <% @orders.each do |order| %>
-    <%= link_to (edit_order_path(order)) do %>
+    <%= link_to (order_path(order)) do %>
       <button>
         <p>Date placed: <%= "#{order.placed_date}" %> </p>
         <p>Follow up: <%= "#{order.follow_up_date}" %> </p>
@@ -39,8 +39,13 @@
       </button>
     <% end %>
 <% end %>
-<br>
-<%= button_to "Delete Customer",{ controller: :customers, action: :destroy }, class: "btn btn-danger", method: :delete  %>
+</div>
+<div class="row">
+  <div class="col-sm-8"></div>
+  <div class="col-sm-4">
+  <%= button_to "Delete Customer",{ controller: :customers, action: :destroy }, class: "btn btn-danger", method: :delete  %>
+  </div>
+</div>
 
 
 

@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 
   def index
+    @follow_ups = Order.where(follow_up_date: Date.today)
     @orders = Order.order(created_at: :desc).first(15)
   end
 

@@ -2,6 +2,7 @@
 <div class="row">
   <div class="col-lg-3">
 <h2> Order  for <%= @customer.first_name %> <%= @customer.last_name %> </h2> <span> <%= button_to "Edit Order", edit_order_path(@order), method: :get%></span>
+<span> <%= button_to "PDF Receipt", "#{order_path(@order)}.pdf", method: :get%></span>
     <h3> Order Info </h3>
     <% end %>
     <p> Place by: <%= @order.placed_by %> </p>
@@ -52,7 +53,9 @@
     <h4> Balance due: $ <%= @order.balance_due %> </h4>
     <p> Complete:  <%= @order.complete %> </p>
   </div>
-  <div class="col-lg-3">
-    
-
+</div>
+  <div class="row">
+    <div class="col-lg-3">
+      <%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %>
+    </div>
   </div>

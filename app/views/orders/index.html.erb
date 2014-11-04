@@ -1,8 +1,8 @@
-<h2>Recent Orders</h2>
+<h2>Today's Follow Ups</h2>
 <div class="row" >
-<% @orders.each do |order| %>
-<div class="col-sm-3" >
-<%= link_to (edit_order_path(order)) do %>
+<% @follow_ups.each do |order| %>
+<div class="col-sm-2" >
+<%= link_to (order_path(order)) do %>
 <button>
   <br>
   <% if order.customer %>
@@ -14,10 +14,26 @@
   <p> Placed on: <%= order.placed_date %> </p>
   </button>
   <% end %>
-  
+  </div>
+<% end %>
+</div>
+
+<h2>Recent Orders</h2>
+<div class="row" >
+<% @orders.each do |order| %>
+<div class="col-sm-2" >
+<%= link_to (order_path(order)) do %>
+<button>
   <br>
-  <%= link_to "Delete", order_path(order), confirm: 'Are you sure?', method: :delete %>
+  <% if order.customer %>
+    <h4> <%= order.customer.first_name %>
+    <%= order.customer.last_name %>
+    </h4>
+  <%end%>
   <br>
+  <p> Placed on: <%= order.placed_date %> </p>
+  </button>
+  <% end %>
   </div>
 <% end %>
 </div>
