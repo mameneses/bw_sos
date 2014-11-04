@@ -53,7 +53,7 @@ class ReceiptPdf < Prawn::Document
       row(0).font_style = :bold
       self.header = true
       self.row_colors = ['DDDDDD', 'FFFFFF']
-      # self.column_widths = [200, 300, 200]
+      # se1lf.column_widths = [200, 300, 200]
     end
   end
  

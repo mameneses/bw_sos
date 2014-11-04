@@ -20,5 +20,4 @@ class Product < ActiveRecord::Base
   def capitalize
     self.company = self.company.capitalize
   end
-
 end
