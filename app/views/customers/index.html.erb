@@ -1,4 +1,8 @@
+<% if params[:q] %>
+<h2>Customer results for "<%=params[:q]%>"</h2>
+<% else %>
 <h2>All Customers</h2>
+<% end %>
 <div class="row">
   <div class="col-sm-9">
     <%= form_tag(customers_path, method: "get") do %>
@@ -6,7 +10,7 @@
       <%= text_field_tag(:q) %>
       <%= submit_tag("Search") %>
     <% end %>
-
+    <br>
     <table class="table">
       <tr>
         <th>Name</th>
@@ -23,7 +27,6 @@
         <td><%= customer.address %> <%= customer.city %> <%= customer.state %></td> 
         <td><%=customer.phone_num %></td>
         </tr>
-    <br>
     <% end %>
     </table>
   </div>

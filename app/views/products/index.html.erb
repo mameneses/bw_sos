@@ -1,5 +1,5 @@
 <% if params[:q] %>
-<h3> Products from <%= "#{params[:q]}" %> </h3>
+<h3> Products result for "<%= params[:q] %>" </h3>
 <% else %>
 <h3>All Product</h3>
 <% end %>
@@ -18,6 +18,7 @@
     <th>Orders</th>
   </tr>
 <% @products.each do |product| %>
+  <% if product.orders.first.complete != true %>
   <tr>
     <td><%= product.company %></td>
     <td><%= product.model_type %></td>
@@ -26,17 +27,14 @@
     <% orders = product.orders %>
       <% if orders.length > 0 %>
         <% orders.each do |order| %>
-          <% if order.complete != true %>
-            <td>
-              <%= link_to(order) do %>
-                <%= order.customer.first_name %> <%= order.customer.last_name %> 
-              <% end %>
-            </td>
-          <% end %>
-        <% end %>
-      <% else %>
-        <td> No Order </td>
+          <td>
+            <%= link_to(order) do %>
+              <%= order.customer.first_name %> <%= order.customer.last_name %> 
+            <% end %>
+          </td>
       <% end %>
+    <% end %>
+  <% end %>
   </tr>
 <% end %>
 </table>
