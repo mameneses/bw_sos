@@ -2,6 +2,7 @@
 <div class="row">
   <div class="col-lg-3">
 <h2> Order  for <%= @customer.first_name %> <%= @customer.last_name %> </h2> <span> <%= button_to "Edit Order", edit_order_path(@order), method: :get%></span>
+<br>
 <span> <%= button_to "PDF Receipt", "#{order_path(@order)}.pdf", method: :get%></span>
     <h3> Order Info </h3>
     <% end %>

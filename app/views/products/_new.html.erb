@@ -17,12 +17,9 @@
 
 <%= f.hidden_field :order_id, value: "#{@order.id}" %>
 <br>
-<%= f.submit %>
+
+<%= f.submit "Add Product", class: "btn-primary" %>
 
 <% end %>
-<% if @product.valid? == false %>
-  <% @product.errors.each do |error| %>
-    <%= error %>
-  <% end %>
-<% end %> 
+
 </div>

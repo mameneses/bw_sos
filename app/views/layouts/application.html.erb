@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Baby World - Special Orders</title>
-  <link rel="stylesheet" href="vendor/assets/stylesheets/reset.css">
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -35,12 +34,18 @@
     </div>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
-
-<%= yield %>
+<div class="container-fluid">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <%= yield %>
+  </div>
+</div>
 <% else %>
-  <div>
   <h1> Baby World - Special Orders System </h1>
-    <%= render "devise/sessions/new" %> 
+    <div class="col-md-5"> </div>
+    <div class="col-md-2">
+      <%= render "devise/sessions/new" %> 
+    </div>
   </div>
 <% end %>
 

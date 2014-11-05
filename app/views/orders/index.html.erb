@@ -1,39 +1,33 @@
 <h2>Today's Follow Ups</h2>
 <div class="row" >
-<% @follow_ups.each do |order| %>
-<div class="col-sm-2" >
-<%= link_to (order_path(order)) do %>
-<button>
-  <br>
-  <% if order.customer %>
-    <h4> <%= order.customer.first_name %>
-    <%= order.customer.last_name %>
-    </h4>
-  <%end%>
-  <br>
-  <p> Placed on: <%= order.placed_date %> </p>
-  </button>
+  <% @follow_ups.each do |order| %>
+    <div class="col-sm-2" >
+      <%= link_to (order_path(order)) do %>
+        <button>
+          <% if order.customer %>
+            <h4> <%= order.customer.first_name %> </h4>
+            <h4><%= order.customer.last_name %> </h4>
+          <%end%>
+        <p> Placed on:<%= order.placed_date %> </p>
+        </button>
+      <% end %>
+    </div>
   <% end %>
-  </div>
-<% end %>
 </div>
 
 <h2>Recent Orders</h2>
 <div class="row" >
-<% @orders.each do |order| %>
-<div class="col-sm-2" >
-<%= link_to (order_path(order)) do %>
-<button>
-  <br>
-  <% if order.customer %>
-    <h4> <%= order.customer.first_name %>
-    <%= order.customer.last_name %>
-    </h4>
-  <%end%>
-  <br>
-  <p> Placed on: <%= order.placed_date %> </p>
-  </button>
+  <% @orders.each do |order| %>
+    <div class="col-sm-2" >
+      <%= link_to (order_path(order)) do %>
+        <button>
+          <% if order.customer %>
+            <h4> <%= order.customer.first_name %> </h4>
+            <h4><%= order.customer.last_name %> </h4>
+          <%end%>
+          <p> Placed on: <%= order.placed_date %> </p>
+        </button>
+      <% end %>
+    </div>
   <% end %>
-  </div>
-<% end %>
 </div>

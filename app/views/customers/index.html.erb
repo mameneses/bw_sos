@@ -1,38 +1,43 @@
-<% if params[:q] %>
-<h2>Customer results for "<%=params[:q]%>"</h2>
-<% else %>
-<h2>All Customers</h2>
-<% end %>
-<div class="row">
-  <div class="col-sm-9">
-    <%= form_tag(customers_path, method: "get") do %>
-      <%= label_tag(:q, "Search for Customer:") %>
-      <%= text_field_tag(:q) %>
-      <%= submit_tag("Search") %>
-    <% end %>
-    <br>
-    <table class="table">
-      <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Phone</th>
-      </tr>
-    <% @customers.each do |customer| %>
-      <tr>
-        <td>
-        <%= link_to(customer) do %>
-          <strong><%= customer.first_name %> <%= customer.last_name %></strong> 
-        <% end %>
-        </td>
-        <td><%= customer.address %> <%= customer.city %> <%= customer.state %></td> 
-        <td><%=customer.phone_num %></td>
-        </tr>
-    <% end %>
-    </table>
-  </div>
 
-  <div class="col-sm-3">
-    <button> <%= link_to "Create new Customer", new_customer_path %>
-    </button>
-  </div>
-</div>
+
+    <div class="row">
+      <div class="col-sm-9">
+        <% if params[:q] %>
+        <h2>Customer results for "<%=params[:q]%>"</h2>
+        <% else %>
+        <h2>All Customers</h2>
+        <% end %>
+      </div>
+      <div class="col-sm-3">
+        <%= button_to "Create new Customer", new_customer_path, class: "btn btn-primary btn-lg" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <%= form_tag(customers_path, method: "get") do %>
+          <%= label_tag(:q, "Search for Customer:") %>
+          <%= text_field_tag(:q) %>
+          <%= submit_tag("Search") %>
+        <% end %>
+        <br>
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+          </tr>
+        <% @customers.each do |customer| %>
+          <tr>
+            <td>
+            <%= link_to(customer) do %>
+              <strong><%= customer.first_name %> <%= customer.last_name %></strong> 
+            <% end %>
+            </td>
+            <td><%= customer.address %> <%= customer.city %> <%= customer.state %></td> 
+            <td><%=customer.phone_num %></td>
+            </tr>
+        <% end %>
+        </table>
+      </div>
+    </div>

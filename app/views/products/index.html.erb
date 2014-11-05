@@ -1,7 +1,7 @@
 <% if params[:q] %>
-<h3> Products result for "<%= params[:q] %>" </h3>
+<h2> Products result for "<%= params[:q] %>" </h2>
 <% else %>
-<h3>All Product</h3>
+<h2>All Product</h2>
 <% end %>
 <%= form_tag(products_path, method: "get") do %>
       <%= label_tag(:q, "Search for Products:") %>
@@ -17,25 +17,25 @@
     <th>Price</th>
     <th>Orders</th>
   </tr>
-<% @products.each do |product| %>
-  <% if product.orders.first.complete != true %>
-  <tr>
-    <td><%= product.company %></td>
-    <td><%= product.model_type %></td>
-    <td><%= product.description%></td>
-    <td><%= product.price %></td>
-    <% orders = product.orders %>
-      <% if orders.length > 0 %>
-        <% orders.each do |order| %>
-          <td>
-            <%= link_to(order) do %>
-              <%= order.customer.first_name %> <%= order.customer.last_name %> 
-            <% end %>
-          </td>
+  <% @products.each do |product| %>
+    <% if product.orders.first.complete != true %>
+    <tr>
+      <td><%= product.company %></td>
+      <td><%= product.model_type %></td>
+      <td><%= product.description%></td>
+      <td>$<%= product.price %></td>
+      <% orders = product.orders %>
+        <% if orders.length > 0 %>
+          <% orders.each do |order| %>
+            <td>
+              <%= link_to(order) do %>
+                <%= order.customer.first_name %> <%= order.customer.last_name %> 
+              <% end %>
+            </td>
+        <% end %>
       <% end %>
     <% end %>
+    </tr>
   <% end %>
-  </tr>
-<% end %>
 </table>
 

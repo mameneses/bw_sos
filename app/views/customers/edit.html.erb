@@ -6,7 +6,7 @@
 
   <%= f.label :last_name %>:
   <%= f.text_field :last_name, value: "#{@customer.last_name}" %><br />
-<br />
+  <br>
 
   <%= f.label :address %>:
   <%= f.text_field :address, value: "#{@customer.address}" %><br />
@@ -19,7 +19,7 @@
 
   <%= f.label :zip_code %>:
   <%= f.text_field :zip_code, value: "#{@customer.zip_code}" %><br />
-  <br />
+  <br>
 
   <%= f.label :phone_num %>:
   <%= f.text_field :phone_num, value: "#{clean_up_phone(@customer.phone_num)}" %><br />
@@ -29,7 +29,7 @@
 
   <%= f.label :email %>:
   <%= f.text_field :email, value: "#{@customer.email}" %><br />
-
-  <%= f.submit %>
+  <br>
+  <%= f.submit "Update Customer", class:"btn-primary" %>
 
 <% end %>

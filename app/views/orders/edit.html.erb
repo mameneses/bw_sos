@@ -22,7 +22,7 @@
             <%= form_for product, method: :delete do |f| %>
             <td>
               <%= f.hidden_field :order_id, value: "#{@order.id}" %>
-              <%= f.submit value: "Delete" %>
+              <%= f.submit value: "Delete", class: "btn-danger" %>
               <% end %>
             </td>
           </tr>
@@ -84,7 +84,7 @@
       <%= f.label :complete %>:
       <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %><br/>
 
-      <%= f.submit %>
+      <%= f.submit "Update Order", class: "btn-primary"%>
     <% end %>
   </div>
 </div>

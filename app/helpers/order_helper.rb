@@ -1,5 +1,5 @@
 module OrderHelper
-  TAX = 0.0575
+  # TAX = 0.0575
   def order_total(products)
     @order_total = 0
     products.each do |product|
@@ -25,6 +25,6 @@ module OrderHelper
   end
 
   def to_cents(number)
-    number.split("").insert(".",-2).join
+    number.to_s.split("").insert(".",-2).join
   end
 end
