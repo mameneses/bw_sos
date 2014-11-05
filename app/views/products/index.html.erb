@@ -23,7 +23,7 @@
       <td><%= product.company %></td>
       <td><%= product.model_type %></td>
       <td><%= product.description%></td>
-      <td>$<%= product.price %></td>
+      <td>$<%= format_price(product.price) %></td>
       <% orders = product.orders %>
         <% if orders.length > 0 %>
           <% orders.each do |order| %>

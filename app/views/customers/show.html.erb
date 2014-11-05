@@ -5,10 +5,7 @@
     <h2><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></h2>
     <%= button_to "Edit Info", edit_customer_path(@customer), method: :get %>
     <br>
-    <form action="/orders/new" method="get"> 
-      <input type="hidden" name="customer_id" value=<%="#{@customer.id}"%>>
-      <button class="btn-primary btn-lg"type="submit"> Create New Order </button>
-    </form>
+      <%= button_to "Delete Customer",{ controller: :customers, action: :destroy }, class: "btn btn-danger", method: :delete  %>
     </div>
     <div class="col-sm-3">
       <h3>Address Info </h3>
@@ -23,7 +20,10 @@
       <p>Email: <%="#{@customer.email}" %></p>
     </div>
     <div class="col-sm-3">
-      <%= button_to "Delete Customer",{ controller: :customers, action: :destroy }, class: "btn btn-danger", method: :delete  %>
+    <form action="/orders/new" method="get"> 
+      <input type="hidden" name="customer_id" value=<%="#{@customer.id}"%>>
+      <button class="btn-primary btn-lg"type="submit"> Create New Order </button>
+    </form>
     </div>
   </div>
 <% end %>

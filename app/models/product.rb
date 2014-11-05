@@ -2,7 +2,7 @@ class Product < ActiveRecord::Base
   has_and_belongs_to_many :customers
   has_and_belongs_to_many :orders
   validates :price, presence: true
-  before_create :capitalize_company, :format_price
+  before_create :capitalize_company
   before_destroy :update_order_remove_item
 
   def update_order_remove_item
@@ -19,9 +19,5 @@ class Product < ActiveRecord::Base
 
   def capitalize_company
     self.company = self.company.capitalize
-  end
-
-  def format_price
-    self.price = self.price
   end
 end
