@@ -15,21 +15,69 @@
   <% end %>
 </div>
 
-<h2>Recent Orders</h2>
+<h2>Pending Orders</h2>
 <div class="row" >
-  <% @orders.each do |order| %>
-    <% if order.complete == false %>
-    <div class="col-sm-2" >
-      <%= link_to (order_path(order)) do %>
-        <button>
-          <% if order.customer %>
-            <h4> <%= order.customer.first_name %> </h4>
-            <h4><%= order.customer.last_name %> </h4>
-          <%end%>
-          <p> Placed on: <%= order.placed_date %> </p>
-        </button>
-      <% end %>
-    </div>
-    <% end %>
-  <% end %>
+  <div class="col-sm-4">
+    <h3>Oakland</h3>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Placed Date</th>
+        </tr>
+        <% @orders.each do |order| %>
+          <% if order.complete == false && order.store_location == "Oakland" %>
+            <tr>
+              <td>
+              <%= link_to(order_path(order)) do %>
+                <strong><%= order.customer.first_name %> <%= order.customer.last_name %></strong> 
+              <% end %>
+              </td>
+              <td><%= order.placed_date %></td> 
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+  </div>
+  <div class="col-sm-4">
+    <h3>San Bruno</h3>
+    <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Placed Date</th>
+        </tr>
+        <% @orders.each do |order| %>
+          <% if order.complete == false && order.store_location == "San Bruno" %>
+            <tr>
+              <td>
+              <%= link_to(order_path(order)) do %>
+                <strong><%= order.customer.first_name %> <%= order.customer.last_name %></strong> 
+              <% end %>
+              </td>
+              <td><%= order.placed_date %></td> 
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+  </div>
+  <div class="col-sm-4">
+    <h3>San Rafael</h3>
+    <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Placed Date</th>
+        </tr>
+        <% @orders.each do |order| %>
+          <% if order.complete == false && order.store_location == "San Rafael" %>
+            <tr>
+              <td>
+              <%= link_to(order_path(order)) do %>
+                <strong><%= order.customer.first_name %> <%= order.customer.last_name %></strong> 
+              <% end %>
+              </td>
+              <td><%= order.placed_date %></td> 
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+  </div>
 </div>

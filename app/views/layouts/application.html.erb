@@ -41,10 +41,12 @@
   </div>
 </div>
 <% else %>
-  <h1> Baby World - Special Orders System </h1>
+  <div class="row"><%= image_tag "baby_world_logo.gif" %></div>
+  <div class="row">
     <div class="col-md-5"> </div>
-    <div class="col-md-2">
-      <%= render "devise/sessions/new" %> 
+      <div class="col-md-2">
+        <%= render "devise/sessions/new" %> 
+      </div>
     </div>
   </div>
 <% end %>

@@ -29,7 +29,7 @@
           <% orders.each do |order| %>
             <td>
               <%= link_to(order) do %>
-                <%= order.customer.first_name %> <%= order.customer.last_name %> 
+                <%= order.customer.first_name %> <%= order.customer.last_name %> - <%= order.store_location %>
               <% end %>
             </td>
         <% end %>

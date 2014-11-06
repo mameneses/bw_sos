@@ -9,7 +9,16 @@ class Product < ActiveRecord::Base
     if self.orders.length > 0
       @order = self.orders.first
       total = @order.items_total - self.price
-      tax = total * TAX
+      location = self.orders.first.store_location
+      sales_tax = 0.09
+      if  location == "San Rafael"
+        sales_tax = SR_TAX
+      elsif location == "San Bruno"
+        sales_tax = SB_TAX
+      else location == "Oakland"
+        sales_tax = OAK_TAX
+      end
+      tax = total * sales_tax
       total_w_tax = total + tax
       g_total = total_w_tax + @order.delivery + @order.assembly
       b_due = g_total - @order.deposit

@@ -12,12 +12,30 @@ class ReceiptPdf < Prawn::Document
   end
  
   def header
-    text "Baby World", size: 15, style: :bold
-    text "4400 Telegraph Ave", size: 10
-    text "Oakland, CA 94609", size: 10
-    text "(510) 282-4406", size: 10
-    text "http://www.babyworldonline.net", size: 10
-    text "luz@babyworldonline.net", size: 10
+    if @order.store_location == "Oakland"
+      text "Baby World", size: 15, style: :bold
+      text "4400 Telegraph Ave", size: 10
+      text "Oakland, CA 94609", size: 10
+      text "(510) 282-4406", size: 10
+      text "http://www.babyworldonline.net", size: 10
+      text "luz@babyworldonline.net", size: 10
+    elsif @order.store_location == "San Bruno"
+      text "Baby World", size: 15, style: :bold
+      text "556 San Mateo Ave", size: 10
+      text "San Bruno, CA 94066", size: 10
+      text "(650) 588-7644", size: 10
+      text "http://www.babyworldonline.net", size: 10
+      text "luz@babyworldonline.net", size: 10
+    elsif @order.store_location == "San Rafael"
+      text "Baby World", size: 15, style: :bold
+      text "514 4th St", size: 10
+      text "San Rafael, CA 94901", size: 10
+      text "(415) 456-5533", size: 10
+      text "http://www.babyworldonline.net", size: 10
+      text "luz@babyworldonline.net", size: 10
+    else
+      text "No Store Location Specified"
+    end
     y_position = cursor - 20
     bounding_box([0, y_position], :width => 200, :height => 100) do
       text "Order for:"

@@ -6,6 +6,7 @@
 <span> <%= button_to "PDF Receipt", "#{order_path(@order)}.pdf", method: :get%></span>
     <h3> Order Info </h3>
     <% end %>
+    <p> Store Location: <%=@order.store_location %></p>
     <p> Place by: <%= @order.placed_by %> </p>
     <p> Date placed: <%= @order.placed_date %> </p>
     <p> Follow up date: <%= @order.follow_up_date %> </p>

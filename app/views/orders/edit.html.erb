@@ -37,6 +37,9 @@
       <%= f.label :placed_by %>:
       <%= f.text_field :placed_by, value: "#{@order.placed_by}" %><br />
 
+      <%= f.label :store_location %>:
+      <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %><br>
+
       <%= f.label :placed_date%>:
       <%= f.date_select :placed_date, value: "#{Time.now.asctime}"  %><br />
 
