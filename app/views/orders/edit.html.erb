@@ -18,7 +18,7 @@
             <td><%=product.company %></td>
             <td><%=product.model_type %></td>
             <td><%=product.description %></td>
-            <td>$<%=product.price %></td>
+            <td>$<%=format_price(product.price) %></td>
             <%= form_for product, method: :delete do |f| %>
             <td>
               <%= f.hidden_field :order_id, value: "#{@order.id}" %>
@@ -46,13 +46,13 @@
       <%= f.text_field :customer_id, type: "hidden", value: "#{@customer.id.to_i}" %>
 
       <%= f.label :items_total %>:
-      <%=  "$ #{@order.items_total}" %><br />
+      <%=  "$ #{format_price(@order.items_total)}" %><br />
 
       <%= f.label :tax %>:
-      <%= "$ #{@order.tax}" %><br />
+      <%= "$ #{format_price(@order.tax)}" %><br />
 
       <%= f.label :total_with_tax %>:
-      <%= "$ #{@order.total_with_tax}" %><br />
+      <%= "$ #{format_price(@order.total_with_tax)}" %><br />
 
       <%= f.label :delivery %>:
       <span class="add-on">$</span>
@@ -63,14 +63,14 @@
       <%= f.text_field :assembly, value: "#{@order.assembly}" %><br />
 
       <%= f.label :grand_total %>:
-      <%= "$ #{@order.grand_total}" %><br />
+      <%= "$ #{format_price(@order.grand_total)}" %><br />
 
       <%= f.label :deposit %>:
       <span class="add-on">$</span>
       <%= f.text_field :deposit, value: "#{@order.deposit}" %><br />
 
       <%= f.label :balance_due %>:
-      <%= "$ #{@order.balance_due}" %><br />
+      <%= "$ #{format_price(@order.balance_due)}" %><br />
 
       <%= f.label :notes %>:<br>
       <%= f.text_area :notes, value: "#{@order.notes}" %><br />

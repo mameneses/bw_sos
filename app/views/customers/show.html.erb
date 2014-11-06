@@ -29,8 +29,9 @@
 <% end %>
 <div class="row">
   <div class="col-sm-12">
-  <h3> Orders </h3>
+  <h3> Pending Orders </h3>
   <% @orders.each do |order| %>
+    <% if order.complete == false %>
       <%= link_to (order_path(order)) do %>
         <button>
           <p>Date placed: <%= "#{order.placed_date}" %> </p>
@@ -43,6 +44,28 @@
           <br>
         </button>
       <% end %>
+    <% end %>
+  <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+  <h3> Completed Orders </h3>
+  <% @orders.each do |order| %>
+    <% if order.complete == true %>
+      <%= link_to (order_path(order)) do %>
+        <button>
+          <p>Date placed: <%= "#{order.placed_date}" %> </p>
+          <p>Follow up: <%= "#{order.follow_up_date}" %> </p>
+          <p>Products: </p>
+          <% order.products.each do |product| %>
+            <%= "#{product.company}" %>
+            <%= "#{product.model_type}" %>
+          <% end %>
+          <br>
+        </button>
+      <% end %>
+    <% end %>
   <% end %>
   </div>
 </div>

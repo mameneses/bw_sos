@@ -27,6 +27,8 @@ module OrderHelper
   def format_price (number)
     if number.to_s.size >= 2
       number.to_s.insert(-3,".")
+    elsif number.to_s.size >= 6
+      number.to_s.insert(-3,".").insert(-7,",")
     else
       number
     end
