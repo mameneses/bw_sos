@@ -20,15 +20,17 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Baby World</a>
+          <a class="navbar-brand" href="#" style="color: white">Baby World</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><%= link_to "Customers", customers_path %> </li> 
             <li><%= link_to "Orders", orders_path %></li>
             <li><%= link_to "Products", products_path %></li>
-            <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
           </ul>
+            <div class="navbar-right">
+            <span class="navbar-brand" style="color:white"> Welcome <%= current_user.first_name %>! </span>
+            <%= link_to('Logout', destroy_user_session_path, :method => :delete, class:"navbar-brand") %></div>
         </div>
       </div>
     </div>

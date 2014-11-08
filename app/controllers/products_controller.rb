@@ -2,8 +2,8 @@ class ProductsController < ApplicationController
   
    def index
       if params[:q]
-      query = params[:q].capitalize
-      @products = Product.where("company LIKE ?", "%#{query}%").order(created_at: :desc).concat(Product.where("model_type LIKE ?", "%#{query}%")).uniq
+      query = params[:q]
+      @products = Product.where("LOWER(company) LIKE LOWER(?)", "%#{query}%").order(created_at: :desc).concat(Product.where("LOWER(model_type) LIKE LOWER(?)", "%#{query}%")).uniq
       else
       @products = Product.order(created_at: :desc).first(15)
       end
@@ -29,18 +29,18 @@ class ProductsController < ApplicationController
       total = @order.items_total + @product.price
       sales_tax = 0.09
       if  location == "San Rafael"
-        sales_tax = SR_TAX
+        sales_tax = Settings.tax.san_rafael
       elsif location == "San Bruno"
-        sales_tax = SB_TAX
+        sales_tax = Settings.tax.san_bruno
       else location == "Oakland"
-        sales_tax = OAK_TAX
+        sales_tax = Settings.tax.oakland
       end
       tax = total * sales_tax
       total_w_tax = total + tax
       g_total = total_w_tax + @order.delivery + @order.assembly
       b_due = g_total - @order.deposit
       @order.update(items_total: total, tax: tax, total_with_tax: total_w_tax, grand_total: g_total, balance_due: b_due)
-      redirect_to "/orders/#{product_order_id_params[:order_id]}/edit"
+      redirect_to "/orders/#{product_order_id_params[:order_id]}"
     end
   end  
 
@@ -54,7 +54,7 @@ class ProductsController < ApplicationController
    def destroy
       @product = Product.find(params[:id])
         @product.destroy
-        redirect_to "/orders/#{product_order_id_params[:order_id]}/edit"
+        redirect_to "/orders/#{product_order_id_params[:order_id]}"
    end
  
  private

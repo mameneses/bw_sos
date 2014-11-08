@@ -5,7 +5,8 @@ Rails.application.routes.draw do
     root :to => "customers#index"
   end
 
-  get 'settings', to: 'setting#settings'
+  # get 'settings', to: 'settings#settings'
+  # post 'settings', to: 'settings#update'
 
   resources :orders
   resources :products

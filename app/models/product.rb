@@ -12,11 +12,11 @@ class Product < ActiveRecord::Base
       location = self.orders.first.store_location
       sales_tax = 0.09
       if  location == "San Rafael"
-        sales_tax = SR_TAX
+        sales_tax = Settings.tax.san_rafael
       elsif location == "San Bruno"
-        sales_tax = SB_TAX
+        sales_tax = Settings.tax.san_bruno
       else location == "Oakland"
-        sales_tax = OAK_TAX
+        sales_tax = Settings.tax.oakland
       end
       tax = total * sales_tax
       total_w_tax = total + tax

@@ -9,7 +9,7 @@
         <% end %>
       </div>
       <div class="col-sm-3">
-        <%= button_to "Create new Customer", new_customer_path, class: "btn btn-primary btn-lg" %>
+        <%= button_to "Create new Customer", new_customer_path, method: :get, class: "btn btn-primary btn-lg" %>
       </div>
     </div>
 
@@ -18,7 +18,7 @@
         <%= form_tag(customers_path, method: "get") do %>
           <%= label_tag(:q, "Search for Customer:") %>
           <%= text_field_tag(:q) %>
-          <%= submit_tag("Search") %>
+          <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
         <% end %>
         <br>
         <table class="table">

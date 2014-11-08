@@ -19,8 +19,8 @@
             <td><%=product.model_type %></td>
             <td><%=product.description %></td>
             <td>$<%=format_price(product.price) %></td>
-            <%= form_for product, method: :delete do |f| %>
             <td>
+            <%= form_for product, method: :delete do |f| %>
               <%= f.hidden_field :order_id, value: "#{@order.id}" %>
               <%= f.submit value: "Delete", class: "btn-danger" %>
               <% end %>

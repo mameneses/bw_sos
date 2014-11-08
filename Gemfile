@@ -40,6 +40,8 @@ gem 'prawn'
 
 gem 'prawn-table'
 
+gem 'settingslogic'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

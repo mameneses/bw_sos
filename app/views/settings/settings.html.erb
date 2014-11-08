@@ -1,0 +1,9 @@
+<h1>this is the settings page</h1>
+<%= form_tag({controller: "settings", action: "update"}, method:"post") do %>
+<%= label_tag(:oakland_tax, "Oakland Tax:") %>
+<%= number_field_tag(:oakland_tax, step: 0.00001, value:"#{@oakland_tax}") %> <span>Current:<%=@oakland_tax%></span> <br>
+<%= submit_tag("Update Settings") %>
+
+<% end %>
+
+<h1><%= @oakland_tax %> </h1>

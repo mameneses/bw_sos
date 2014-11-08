@@ -1,12 +1,13 @@
 class OrdersController < ApplicationController
 
   def index
-    @follow_ups = Order.where(follow_up_date: Date.today)
+    @follow_ups = Order.where(follow_up_date: Date.today).order(updated_at: :asc)
     @orders = Order.order(created_at: :desc).first(15)
   end
 
   def show
     @order = Order.find(params[:id])
+    @product = Product.new
     @products = @order.products
     @customer = @order.customer
 
@@ -23,12 +24,12 @@ class OrdersController < ApplicationController
     @customer = Customer.find(params[:customer_id].to_i)
     @order = Order.new
     @product = Product.new
-    @user = User.find(1)
+    @user = current_user
   end
 
   def create
     @order = Order.create(order_params)
-    redirect_to "/orders/#{@order.id}/edit" 
+    redirect_to "/orders/#{@order.id}/" 
   end
 
   def edit
@@ -45,7 +46,11 @@ class OrdersController < ApplicationController
     g_total = @order.total_with_tax + @order.delivery + @order.assembly
     b_due = g_total - @order.deposit
     @order.update(grand_total: g_total, balance_due: b_due )
-    redirect_to "/orders/#{params[:id]}"
+    if params[:follow_up_page]
+      redirect_to "/orders"
+    else
+      redirect_to "/orders/#{params[:id]}"
+    end
   end
 
   def destroy

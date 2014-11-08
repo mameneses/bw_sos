@@ -1,0 +1,14 @@
+defaults: &defaults
+  tax:
+    oakland: 0.09
+    san_bruno: 0.09
+    san_rafael: 0.0925
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

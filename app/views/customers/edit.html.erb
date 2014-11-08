@@ -30,6 +30,8 @@
   <%= f.label :email %>:
   <%= f.text_field :email, value: "#{@customer.email}" %><br />
   <br>
-  <%= f.submit "Update Customer", class:"btn-primary" %>
+  <%= f.submit "Update Customer", class:"btn btn-primary" %>
 
 <% end %>
+<br>
+<%= button_to "Delete Customer",{ controller: :customers, action: :destroy }, class: "btn btn-danger", method: :delete  %>

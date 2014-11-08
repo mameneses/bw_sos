@@ -1,37 +1,43 @@
-<% if @customer %>
 <div class="row">
   <div class="col-lg-3">
-<h2> Order  for <%= @customer.first_name %> <%= @customer.last_name %> </h2> <span> <%= button_to "Edit Order", edit_order_path(@order), method: :get, class:"btn-primary btn-lg"%></span>
-<br>
-<span> <%= button_to "PDF Receipt", "#{order_path(@order)}.pdf", method: :get%></span>
-    <h3> Order Info </h3>
+<h2> Order  for </h2>
+<%=link_to @customer do %>
+  <h2><%= @customer.first_name %> <%= @customer.last_name %> </h2> 
+<% end %>
+  <span> <%= button_to "PDF Receipt", "#{order_path(@order)}.pdf", method: :get%></span>
+    <h4> Order Info </h4>
+    <%= form_for @order, url: {action: "update"} do |f| %>
+      <p> Store Location: <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %></p>
+      <p> Place by: <%= f.text_field :placed_by, value: "#{@order.placed_by}" %> </p>
+      <p> Placed: <%= f.date_select :placed_date, value: "#{Time.now.asctime}"  %> </p>
+      <p> Follow: <%= f.date_select :follow_up_date, value: "#{@order.follow_up_date}"%></p>
+      <h4>Gift Info</h4>
+      <p> Purchased by: <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %> </p>
+      <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}" %> </p>
+      <%= f.submit "Update Info", class: "btn btn-default"%>
     <% end %>
-    <p> Store Location: <%=@order.store_location %></p>
-    <p> Place by: <%= @order.placed_by %> </p>
-    <p> Date placed: <%= @order.placed_date %> </p>
-    <p> Follow up date: <%= @order.follow_up_date %> </p>
-    <h3>Address Info </h3>
-    <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
-    <p><%= "#{@customer.address}" %></p>
-    <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
 
-    <h3>Contact Info</h3>
-    <p>Main Phone: <%= "#{@customer.phone_num}" %> </p>
-    <p>Alternate Phone: <%="#{@customer.alt_phone_num}" %></p>
-    <p>Email: <%="#{@customer.email}" %></p>
+      <h4>Address Info </h4>
+      <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
+      <p><%= "#{@customer.address}" %></p>
+      <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
 
-    <h3>Gift Info</h3>
-    <p> Purchased by <%= @order.purchased_by %> </p>
-    <p> Gift Note: <%= @order.gift_note %> </p>
+      <h4>Contact Info</h4>
+      <p>Main Phone: <%= "#{@customer.phone_num}" %> </p>
+      <p>Alternate Phone: <%="#{@customer.alt_phone_num}" %></p>
+      <p>Email: <%="#{@customer.email}" %></p>
+
+      <%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %>
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-9">
+    <div class="row" >
     <h3>Products</h3>
     <table class="table table-striped">
       <tr>
-        <th>Company:</th>
-        <th>Model:</th>
-        <th>Description:</th>
-        <th>Price:</th>
+        <th>Company</th>
+        <th>Model</th>
+        <th>Description</th>
+        <th>Price</th>
       </tr>
       <% @order.products.each do |product| %>
         <tr>
@@ -39,25 +45,53 @@
           <td><%=product.model_type %></td>
           <td><%=product.description %></td>
           <td>$<%= format_price(product.price) %></td>
+          <td>
+          <%= form_for product, method: :delete do |f| %>
+              <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+              <%= f.submit value: "Delete", class: "btn-danger" %>
+              <% end %>
+            </td>
         </tr>
       <% end %>
+      <tr>
+      <%= form_for @product, as: :product, url: products_path, method: :post do |f| %>
+        <td><%= f.text_field :company %></td>
+        <td><%= f.text_field :model_type %></td>
+        <td><%= f.text_field :description %></td>
+        <td><%= f.text_field :price %></td>
+        <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+        <td><%= f.submit "Add Product", class: "btn-primary" %></td>
+      </tr>
+      <% end %>
     </table>
-    <p> Notes:  <%= @order.notes %> </p>
-  </div>
-  <div class="col-lg-3">
-    <p> Items total: $ <%= format_price(@order.items_total) %> </p>
-    <p> Tax: $ <%= format_price(@order.tax) %> </p>
-    <p> Total w/ tax: $ <%= format_price(@order.total_with_tax) %> </p>
-    <p> Delivery: $ <%= format_price(@order.delivery) %> </p>
-    <p> Assembly: $ <%= format_price(@order.assembly) %> </p>
-    <h4> Grand total: $ <%= format_price(@order.grand_total) %> </h4>
-    <p> Deposit: $ <%= format_price(@order.deposit) %> </p>
-    <h4> Balance due: $ <%= format_price(@order.balance_due) %> </h4>
-    <p> Complete:  <%= @order.complete %> </p>
+    </div>
+    <div class="row">
+    <%= form_for @order, url: {action: "update"} do |f| %>
+      <div class="col-sm-8">
+        <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:64%" %> </p>
+      </div>
+      <div class="col-sm-4">
+        <br>
+        <p> Items total: $ <%= format_price(@order.items_total) %> </p>
+        <p> Tax: $ <%= format_price(@order.tax) %> </p>
+        <p> Total w/ tax: $ <%= format_price(@order.total_with_tax) %> </p>
+        <p> Delivery: $ <%= f.text_field :delivery, value: "#{@order.delivery}" %> </p>
+        <p> Assembly: $ <%= f.text_field :assembly, value: "#{@order.assembly}" %> </p>
+        <h4> Grand total: $ <%= format_price(@order.grand_total) %> </h4>
+        <p> Deposit: $ <%= f.text_field :deposit, value: "#{@order.deposit}" %> </p>
+        <h3> Balance due: $ <%= format_price(@order.balance_due) %> </h3>
+        <p> Complete:  <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %> </p>
+        <br>
+        <%= f.submit "Update Order", class: "btn btn-primary"%>
+    <% end %>
+        
+      </div>
+    </div>
   </div>
 </div>
   <div class="row">
+  <div class="col-lg-3">
+  </div>
     <div class="col-lg-3">
-      <%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %>
     </div>
   </div>
