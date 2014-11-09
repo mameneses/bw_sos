@@ -41,7 +41,7 @@
       </tr>
       <% @order.products.each do |product| %>
         <tr>
-          <td><%=product.company %></td>
+          <td><span class="glyphicon glyphicon-tag"></span> <%=product.company %></td>
           <td><%=product.model_type %></td>
           <td><%=product.description %></td>
           <td>$<%= format_price(product.price) %></td>

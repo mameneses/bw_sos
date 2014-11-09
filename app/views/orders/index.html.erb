@@ -9,8 +9,7 @@
     </tr>
     <% @follow_ups.each do |order| %>
       <tr>
-        
-          <td> 
+          <td> <span class="glyphicon glyphicon-list-alt"></span>
             <%= link_to (order_path(order)) do %>
               <strong> <%= order.customer.first_name %> <%= order.customer.last_name %> </strong>
             <% end %>
@@ -46,7 +45,7 @@
         <% @orders.each do |order| %>
           <% if order.complete == false && order.store_location == "Oakland" %>
             <tr>
-              <td>
+              <td><span class="glyphicon glyphicon-list-alt"></span>
               <%= link_to(order_path(order)) do %>
                 <strong><%= order.customer.first_name %> <%= order.customer.last_name %></strong> 
               <% end %>
@@ -67,7 +66,7 @@
         <% @orders.each do |order| %>
           <% if order.complete == false && order.store_location == "San Bruno" %>
             <tr>
-              <td>
+              <td><span class="glyphicon glyphicon-list-alt"></span>
               <%= link_to(order_path(order)) do %>
                 <strong><%= order.customer.first_name %> <%= order.customer.last_name %></strong> 
               <% end %>
@@ -88,7 +87,7 @@
         <% @orders.each do |order| %>
           <% if order.complete == false && order.store_location == "San Rafael" %>
             <tr>
-              <td>
+              <td><span class="glyphicon glyphicon-list-alt"></span>
               <%= link_to(order_path(order)) do %>
                 <strong><%= order.customer.first_name %> <%= order.customer.last_name %></strong> 
               <% end %>

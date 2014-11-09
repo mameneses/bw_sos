@@ -20,7 +20,7 @@
   <% @products.each do |product| %>
     <% if product.orders.first.complete != true %>
     <tr>
-      <td><%= product.company %></td>
+      <td><span class="glyphicon glyphicon-tag"></span> <%= product.company %></td>
       <td><%= product.model_type %></td>
       <td><%= product.description%></td>
       <td>$<%= format_price(product.price) %></td>
