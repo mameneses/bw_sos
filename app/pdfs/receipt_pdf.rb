@@ -10,6 +10,17 @@ class ReceiptPdf < Prawn::Document
     table_content
     text_content
   end
+
+  def price_format number
+    number = number.to_s
+    if number.size >= 2
+      number.insert(-3,".")
+    elsif number.size >= 6
+      number.insert(-3,".").insert(-7,",")
+    else
+      number  
+    end    
+  end
  
   def header
     if @order.store_location == "Oakland"
@@ -34,7 +45,7 @@ class ReceiptPdf < Prawn::Document
       text "http://www.babyworldonline.net", size: 10
       text "luz@babyworldonline.net", size: 10
     else
-      text "No Store Location Specified"
+      text "Baby World"
     end
     y_position = cursor - 20
     bounding_box([0, y_position], :width => 200, :height => 100) do
@@ -63,21 +74,21 @@ class ReceiptPdf < Prawn::Document
     end
     y_position = cursor - 20
     bounding_box([0, y_position], :width => 200, :height => 150) do
-      text "Items Total: $#{@order.items_total}"
-      text "Tax: $#{@order.tax}"
-      text "Total w/ Tax: $#{@order.total_with_tax}"
-      text "Delivery: $#{@order.delivery}"
-      text "Assembly: $#{@order.assembly}"
-      text "Grand Total: $#{@order.grand_total}", size: 14, style: :bold
-      text "Desposit: $#{@order.deposit}"
-      text "Balance Due: $#{@order.balance_due}",size: 14, style: :bold
+      text "Items Total: $#{price_format(@order.items_total)}"
+      text "Tax: $#{price_format(@order.tax)}"
+      text "Total w/ Tax: $#{price_format(@order.total_with_tax)}"
+      text "Delivery: $#{price_format(@order.delivery)}"
+      text "Assembly: $#{price_format(@order.assembly)}"
+      text "Grand Total: $#{price_format(@order.grand_total)}", size: 14, style: :bold
+      text "Desposit: $#{price_format(@order.deposit)}"
+      text "Balance Due: $#{price_format(@order.balance_due)}",size: 14, style: :bold
     end
   end
  
   def product_rows
     [['Company', 'Model', 'Description', "Price"]] +
       @products.map do |product|
-      [product.company, product.model_type, product.description, "$#{product.price}"]
+      [product.company, product.model_type, product.description, "$#{price_format(product.price)}"]
     end
   end
 

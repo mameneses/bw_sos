@@ -3,7 +3,6 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :products
   after_initialize :init
   before_destroy :destroy_products
-
   def init
     self.items_total ||= 0
     self.tax ||= 0

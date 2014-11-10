@@ -1,12 +1,12 @@
 <% if params[:q] %>
 <h2> Products result for "<%= params[:q] %>" </h2>
 <% else %>
-<h2>All Product</h2>
+<h2>Products</h2>
 <% end %>
 <%= form_tag(products_path, method: "get") do %>
-      <%= label_tag(:q, "Search for Products:") %>
-      <%= text_field_tag(:q) %>
-      <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
+  <%= label_tag(:q, "Search for Products:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
 <% end %>
 <br>
 <table class="table table-striped">
@@ -27,7 +27,7 @@
       <% orders = product.orders %>
         <% if orders.length > 0 %>
           <% orders.each do |order| %>
-            <td>
+            <td><span class="glyphicon glyphicon-list-alt"></span>
               <%= link_to(order) do %>
                 <%= order.customer.first_name %> <%= order.customer.last_name %> - <%= order.store_location %>
               <% end %>

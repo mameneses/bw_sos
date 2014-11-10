@@ -23,6 +23,7 @@ class ProductsController < ApplicationController
     if @product.valid? == false
       redirect_to "/orders/#{product_order_id_params[:order_id]}/edit"
     else
+      @order.update(updated_by:"#{current_user.first_name}")
       @product.errors.clear
       @order.products << @product
       @order = @product.orders.first
@@ -53,6 +54,8 @@ class ProductsController < ApplicationController
 
    def destroy
       @product = Product.find(params[:id])
+      @order = @product.orders.first
+      @order.update(updated_by:"#{current_user.first_name}")
         @product.destroy
         redirect_to "/orders/#{product_order_id_params[:order_id]}"
    end

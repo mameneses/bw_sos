@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
       format.html
       format.pdf do
         pdf = ReceiptPdf.new(@customer, @order, @products)
+        pdf.autoprint
         send_data pdf.render, filename: "#{@customer.first_name}_#{@customer.last_name}_Receipt_#{@order.placed_date}.pdf", type: 'applicaiton/pdf'
       end
     end
@@ -61,7 +62,7 @@ class OrdersController < ApplicationController
 private
 
   def order_params
-    params.require(:order).permit(:placed_by, :placed_date, :follow_up_date, :customer_id, :items_total, :tax, :total_with_tax, :delivery, :assembly, :grand_total, :deposit, :balance_due, :notes, :purchased_by, :gift_note, :complete, :store_location)
+    params.require(:order).permit(:placed_by, :placed_date, :follow_up_date, :customer_id, :items_total, :tax, :total_with_tax, :delivery, :assembly, :grand_total, :deposit, :balance_due, :notes, :purchased_by, :gift_note, :complete, :store_location, :updated_by)
   end
 
 end

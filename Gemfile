@@ -42,6 +42,8 @@ gem 'prawn-table'
 
 gem 'settingslogic'
 
+gem 'prawn-print', :git => 'git://github.com/barsoom/prawn-print.git'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

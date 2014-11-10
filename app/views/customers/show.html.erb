@@ -25,25 +25,23 @@
             <th>Placed</th>
             <th>Products</th>
           </tr>
-            <% @orders.each do |order| %>
-              <% if order.complete == false %>
-                  <tr>
-                      <td> <span class="glyphicon glyphicon-list-alt"></span>
-                      <%= link_to (order_path(order)) do %>
-                        <strong><%= order.store_location %> </strong>
-                      <% end %>
-                      </td>
-                      <td> <%= order.placed_date %> </td>
-                    <td> 
-                      <ul>
-                        <% order.products.each do |product| %>
-                          <li><%= "#{product.company}" %> <%= "#{product.model_type}" %></li>
-                        <% end %>
-                      </ul>
-                    </td>
-                  </tr>
-              <% end %>
+          <% @orders.each do |order| %>
+            <% if order.complete == false %>
+                <tr>
+                  <td> <span class="glyphicon glyphicon-list-alt"></span>
+                  <%= link_to (order_path(order)) do %>
+                    <strong><%= order.store_location %> </strong>
+                  <% end %>
+                  </td>
+                  <td> <%= order.placed_date.strftime("%m/%d/%Y") %> </td>
+                  <td> 
+                   <% order.products.each do |product| %>
+                    <p class="glyphicon glyphicon-tag"> <%= "#{product.company}" %> <%= "#{product.model_type}" %></p><br>
+                  <% end %>
+                  </td>
+                </tr>
             <% end %>
+          <% end %>
         </table>
       </div>
       <div class="row">
@@ -54,25 +52,23 @@
             <th>Placed</th>
             <th>Products</th>
           </tr>
-            <% @orders.each do |order| %>
-              <% if order.complete == true %>
-                  <tr>
-                      <td> <span class="glyphicon glyphicon-list-alt"></span>
-                      <%= link_to (order_path(order)) do %>
-                        <strong><%= order.store_location %> </strong>
-                      <% end %>
-                      </td>
-                      <td> <%= order.placed_date %> </td>
-                    <td> 
-                      <ul>
-                        <% order.products.each do |product| %>
-                          <li><%= "#{product.company}" %> <%= "#{product.model_type}" %></li>
-                        <% end %>
-                      </ul>
-                    </td>
-                  </tr>
-              <% end %>
+          <% @orders.each do |order| %>
+            <% if order.complete == true %>
+              <tr>
+                <td> <span class="glyphicon glyphicon-list-alt"></span>
+                  <%= link_to (order_path(order)) do %>
+                    <strong><%= order.store_location %> </strong>
+                  <% end %>
+                </td>
+                <td> <%= order.placed_date %> </td>
+                <td> 
+                  <% order.products.each do |product| %>
+                    <p class="glyphicon glyphicon-tag"> <%= "#{product.company}" %> <%= "#{product.model_type}" %></p><br>
+                  <% end %>
+                </td>
+              </tr>
             <% end %>
+          <% end %>
         </table>
       </div>
     </div>

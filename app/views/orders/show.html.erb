@@ -4,7 +4,9 @@
 <%=link_to @customer do %>
   <h2><%= @customer.first_name %> <%= @customer.last_name %> </h2> 
 <% end %>
-  <span> <%= button_to "PDF Receipt", "#{order_path(@order)}.pdf", method: :get%></span>
+    <%= button_to "#{order_path(@order)}.pdf", method: :get, class:"btn btn-default" do %>
+      <span class="glyphicon glyphicon-save"> Receipt </span>
+    <% end %>
     <h4> Order Info </h4>
     <%= form_for @order, url: {action: "update"} do |f| %>
       <p> Store Location: <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %></p>
@@ -14,7 +16,8 @@
       <h4>Gift Info</h4>
       <p> Purchased by: <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %> </p>
       <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}" %> </p>
-      <%= f.submit "Update Info", class: "btn btn-default"%>
+      <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
+      <%= f.submit "Update Info", class: "btn btn-primary"%>
     <% end %>
 
       <h4>Address Info </h4>
@@ -69,6 +72,7 @@
     <%= form_for @order, url: {action: "update"} do |f| %>
       <div class="col-sm-8">
         <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:64%" %> </p>
+  <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
       </div>
       <div class="col-sm-4">
         <br>
@@ -82,9 +86,10 @@
         <h3> Balance due: $ <%= format_price(@order.balance_due) %> </h3>
         <p> Complete:  <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %> </p>
         <br>
+        <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
         <%= f.submit "Update Order", class: "btn btn-primary"%>
     <% end %>
-        
+
       </div>
     </div>
   </div>
