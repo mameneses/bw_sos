@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
   validates :price, presence: true
   before_create :capitalize_company
   before_destroy :update_order_remove_item
-
+  
   def update_order_remove_item
     if self.orders.length > 0
       @order = self.orders.first
@@ -12,13 +12,13 @@ class Product < ActiveRecord::Base
       location = self.orders.first.store_location
       sales_tax = 0.09
       if  location == "San Rafael"
-        sales_tax = Settings.tax.san_rafael
+        sales_tax = Settings.san_rafael_tax
       elsif location == "San Bruno"
-        sales_tax = Settings.tax.san_bruno
+        sales_tax = Settings.san_bruno_tax
       else location == "Oakland"
-        sales_tax = Settings.tax.oakland
+        sales_tax = Settings.oakland_tax
       end
-      tax = total * sales_tax
+      tax = total * sales_tax.to_f
       total_w_tax = total + tax
       g_total = total_w_tax + @order.delivery + @order.assembly
       b_due = g_total - @order.deposit

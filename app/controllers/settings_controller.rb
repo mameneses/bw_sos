@@ -1,12 +1,14 @@
 class SettingsController < ApplicationController
-  def settings
-    @oakland_tax = Settings.tax.oakland
-    @san_bruno_tax = Settings.tax.san_bruno
-    @san_rafael_tax = Settings.tax.san_rafael
+  def index
+    @oakland_tax = Settings.oakland_tax
+    @san_bruno_tax = Settings.san_bruno_tax
+    @san_rafael_tax = Settings.san_rafael_tax
+    @user = current_user
   end
   def update
-    Settings.tax.oakland = params[:oakland_tax]
-    Settings.tax.san_bruno = params[:san_bruno_tax]
-    Settings.tax.san_rafael = params[:san_rafael_tax]
+    Settings[:oakland_tax] = params[:oakland_tax]
+    Settings[:san_bruno_tax] = params[:san_bruno_tax]
+    Settings[:san_rafael_tax] = params[:san_rafael_tax]
+    redirect_to "/settings"
   end
 end

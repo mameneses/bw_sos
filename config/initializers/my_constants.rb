@@ -1,3 +1,0 @@
-SR_TAX = 0.0925
-OAK_TAX = 0.09
-SB_TAX = 0.09

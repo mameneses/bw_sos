@@ -1,0 +1,19 @@
+<h1>Settings</h1>
+<h3> Set Tax Rate</h3>
+<%= form_tag("settings/1", method: :put) do %>
+<%= label_tag(:oakland_tax, "Oakland Tax:") %>
+<%= number_field_tag :oakland_tax, "#{@oakland_tax}", :step => "any", style:"width:70px"%> <span>Current: <%=@oakland_tax* 100%>%<br>
+<%= label_tag(:san_bruno_tax, "San Bruno Tax:") %>
+<%= number_field_tag :san_bruno_tax, "#{@san_bruno_tax}", :step => "any", style:"width:70px"%> <span>Current: <%=@san_bruno_tax* 100%>%<br>
+<%= label_tag(:san_rafael_tax, "San Rafael Tax:") %>
+<%= number_field_tag :san_rafael_tax, "#{@san_rafael_tax}", :step => "any", style:"width:70px" %> <span>Current: <%=@san_rafael_tax * 100%>%</span> <br> <br>
+<%= submit_tag"Update Settings", class:"btn btn-primary" %><br>
+
+<% end %>
+<br>
+<%= button_to "Edit Profile", edit_user_registration_path, class:"btn btn-default",method: :get %>
+<br>
+<% if current_user.admin == true %>
+<%= button_to "Create New User", new_user_registration_path, class:"btn btn-default",method: :get %>
+<% end %>
+

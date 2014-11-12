@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
   belongs_to :customer
   has_and_belongs_to_many :products
   after_initialize :init
+  before_save :save_float_as_int
   before_destroy :destroy_products
   def init
     self.items_total ||= 0
@@ -14,6 +15,10 @@ class Order < ActiveRecord::Base
     self.balance_due ||= 0
     self.items_total ||= 0
     self.complete = false if self.complete.nil?
+  end
+
+  def save_float_as_int
+    self.delivery =  self.delivery * 100 #this doesnt work due to updating several times within each update.
   end
 
   def destroy_products

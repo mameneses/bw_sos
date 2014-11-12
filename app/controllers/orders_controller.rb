@@ -44,6 +44,16 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     @order.update(order_params)
+     location = @order.store_location
+      sales_tax = 0.09
+      if  location == "San Rafael"
+        sales_tax = Settings.san_rafael_tax
+      elsif location == "San Bruno"
+        sales_tax = Settings.san_bruno_tax
+      else location == "Oakland"
+        sales_tax = Settings.oakland_tax
+      end
+    @order.update(delivery:"#{@order.delivery * sales_tax + @order.delivery}")
     g_total = @order.total_with_tax + @order.delivery + @order.assembly
     b_due = g_total - @order.deposit
     @order.update(grand_total: g_total, balance_due: b_due )
