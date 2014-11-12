@@ -44,6 +44,8 @@ gem 'settingslogic'
 
 gem 'prawn-print', :git => 'git://github.com/barsoom/prawn-print.git'
 
+gem 'money-rails'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

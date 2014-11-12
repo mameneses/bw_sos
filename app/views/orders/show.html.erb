@@ -47,7 +47,7 @@
           <td><span class="glyphicon glyphicon-tag"></span> <%=product.company %></td>
           <td><%=product.model_type %></td>
           <td><%=product.description %></td>
-          <td>$<%= format_price(product.price) %></td>
+          <td><%=number_to_currency(product.price) %></td>
           <td>
           <%= form_for product, method: :delete do |f| %>
               <%= f.hidden_field :order_id, value: "#{@order.id}" %>
@@ -76,14 +76,14 @@
       </div>
       <div class="col-sm-4">
         <br>
-        <p> Items total: $ <%= format_price(@order.items_total) %> </p>
-        <p> Tax: $ <%= format_price(@order.tax) %> </p>
-        <p> Total w/ tax: $ <%= format_price(@order.total_with_tax) %> </p>
-        <p> Delivery: $ <%= f.text_field :delivery, value: "#{@order.delivery}" %> </p>
-        <p> Assembly: $ <%= f.text_field :assembly, value: "#{@order.assembly}" %> </p>
-        <h4> Grand total: $ <%= format_price(@order.grand_total) %> </h4>
-        <p> Deposit: $ <%= f.text_field :deposit, value: "#{@order.deposit}" %> </p>
-        <h3> Balance due: $ <%= format_price(@order.balance_due) %> </h3>
+        <p> Items total: <%= number_to_currency(@order.items_total) %> </p>
+        <p> Tax: <%= number_to_currency(@order.tax) %> </p>
+        <p> Total w/ tax: <%= number_to_currency(@order.total_with_tax) %> </p>
+        <p> Delivery: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "")}" %> </p>
+        <p> Assembly: $ <%= f.text_field :assembly, value: "#{ number_to_currency(@order.assembly, unit: "")}" %> </p>
+        <h4> Grand total: <%= number_to_currency(@order.grand_total) %> </h4>
+        <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "")}" %> </p>
+        <h3> Balance due: <%= number_to_currency(@order.balance_due) %> </h3>
         <p> Complete:  <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %> </p>
         <br>
         <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>

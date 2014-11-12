@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
   validates :price, presence: true
   before_create :capitalize_company
   before_destroy :update_order_remove_item
-  
+
   def update_order_remove_item
     if self.orders.length > 0
       @order = self.orders.first

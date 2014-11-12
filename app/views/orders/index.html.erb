@@ -7,28 +7,35 @@
       <th>Products</th>
       <th>Notes</th>
     </tr>
-    <% @follow_ups.each do |order| %>
-      <tr>
-          <td> <span class="glyphicon glyphicon-list-alt"></span>
-            <%= link_to (order_path(order)) do %>
-              <strong> <%= order.customer.first_name %> <%= order.customer.last_name %> </strong>
-            <% end %>
-          </td>
-          <td><%= order.customer.phone_num %></td>
-          <td> 
-            <% order.products.each do |product| %>
-              <p class="glyphicon glyphicon-tag"> <%= product.company %>  <%= product.model_type %>  <%= product.description %></p><br>
-            <% end %>
-          </td>
-          <td> 
-            <%= form_for order, as: :order, url: "/orders/#{order.id}", method: :put do |f| %>
-              <%= hidden_field_tag "follow_up_page", "true" %>
-              <%= f.text_field :notes, value: "#{order.notes}", style:"width:300px" %>
-              <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
-            <% end %>
-          </td>
-        
-      </tr>
+    <% if @follow_ups.length > 0 %>
+      <% @follow_ups.each do |order| %>
+        <tr>
+            <td> <span class="glyphicon glyphicon-list-alt"></span>
+              <%= link_to (order_path(order)) do %>
+                <strong> <%= order.customer.first_name %> <%= order.customer.last_name %> </strong>
+              <% end %>
+            </td>
+            <td><%= order.customer.phone_num %></td>
+            <td> 
+              <% order.products.each do |product| %>
+                <p class="glyphicon glyphicon-tag"> <%= product.company %>  <%= product.model_type %>  <%= product.description %></p><br>
+              <% end %>
+            </td>
+            <td> 
+              <%= form_for order, as: :order, url: "/orders/#{order.id}", method: :put do |f| %>
+                <%= hidden_field_tag "follow_up_page", "true" %>
+                <%= f.text_field :notes, value: "#{order.notes}", style:"width:300px" %>
+                <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
+              <% end %>
+            </td>
+        </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td>
+        <h4> No Follow Ups Today </h4>
+      <td>
+    <tr>
   <% end %>
   </table>
 </div>

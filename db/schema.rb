@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109043336) do
+ActiveRecord::Schema.define(version: 20141112223735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,14 +41,14 @@ ActiveRecord::Schema.define(version: 20141109043336) do
     t.date     "follow_up_date"
     t.integer  "customer_id"
     t.integer  "product_id"
-    t.integer  "items_total",    default: 0
-    t.integer  "tax"
-    t.integer  "total_with_tax"
-    t.integer  "delivery"
-    t.integer  "assembly"
-    t.integer  "grand_total"
-    t.integer  "deposit"
-    t.integer  "balance_due"
+    t.decimal  "items_total",    precision: 20, scale: 2, default: 0.0
+    t.decimal  "tax",            precision: 20, scale: 2
+    t.decimal  "total_with_tax", precision: 20, scale: 2
+    t.decimal  "delivery",       precision: 20, scale: 2
+    t.decimal  "assembly",       precision: 20, scale: 2
+    t.decimal  "grand_total",    precision: 20, scale: 2
+    t.decimal  "deposit",        precision: 20, scale: 2
+    t.decimal  "balance_due",    precision: 20, scale: 2
     t.text     "notes"
     t.string   "purchased_by"
     t.text     "gift_note"
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20141109043336) do
     t.string   "company"
     t.string   "model_type"
     t.string   "description"
-    t.integer  "price"
+    t.decimal  "price",       precision: 20, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
   end

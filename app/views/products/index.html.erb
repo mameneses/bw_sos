@@ -23,7 +23,7 @@
       <td><span class="glyphicon glyphicon-tag"></span> <%= product.company %></td>
       <td><%= product.model_type %></td>
       <td><%= product.description%></td>
-      <td>$<%= format_price(product.price) %></td>
+      <td><%= number_to_currency(product.price) %></td>
       <% orders = product.orders %>
         <% if orders.length > 0 %>
           <% orders.each do |order| %>

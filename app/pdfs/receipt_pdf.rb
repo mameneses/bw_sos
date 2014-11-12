@@ -1,6 +1,7 @@
 require 'prawn/table'
 
 class ReceiptPdf < Prawn::Document
+  include ActionView::Helpers::NumberHelper
   def initialize(customer, order, products)
     super()
     @customer = customer
@@ -9,17 +10,6 @@ class ReceiptPdf < Prawn::Document
     header
     table_content
     text_content
-  end
-
-  def price_format number
-    number = number.to_s
-    if number.size >= 2
-      number.insert(-3,".")
-    elsif number.size >= 6
-      number.insert(-3,".").insert(-7,",")
-    else
-      number  
-    end    
   end
  
   def header
@@ -74,21 +64,21 @@ class ReceiptPdf < Prawn::Document
     end
     y_position = cursor - 20
     bounding_box([0, y_position], :width => 200, :height => 150) do
-      text "Items Total: $#{price_format(@order.items_total)}"
-      text "Tax: $#{price_format(@order.tax)}"
-      text "Total w/ Tax: $#{price_format(@order.total_with_tax)}"
-      text "Delivery: $#{price_format(@order.delivery)}"
-      text "Assembly: $#{price_format(@order.assembly)}"
-      text "Grand Total: $#{price_format(@order.grand_total)}", size: 14, style: :bold
-      text "Desposit: $#{price_format(@order.deposit)}"
-      text "Balance Due: $#{price_format(@order.balance_due)}",size: 14, style: :bold
+      text "Items Total: #{number_to_currency(@order.items_total)}"
+      text "Tax: #{number_to_currency(@order.tax)}"
+      text "Total w/ Tax: #{number_to_currency(@order.total_with_tax)}"
+      text "Delivery: #{number_to_currency(@order.delivery)}"
+      text "Assembly: #{number_to_currency(@order.assembly)}"
+      text "Grand Total: #{number_to_currency(@order.grand_total)}", size: 14, style: :bold
+      text "Desposit: #{number_to_currency(@order.deposit)}"
+      text "Balance Due: #{number_to_currency(@order.balance_due)}",size: 14, style: :bold
     end
   end
  
   def product_rows
     [['Company', 'Model', 'Description', "Price"]] +
       @products.map do |product|
-      [product.company, product.model_type, product.description, "$#{price_format(product.price)}"]
+      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}"]
     end
   end
 
