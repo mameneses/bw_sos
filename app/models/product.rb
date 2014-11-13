@@ -4,11 +4,16 @@ class Product < ActiveRecord::Base
   validates :price, presence: true
   before_create :capitalize_company
   before_destroy :update_order_remove_item
+  after_initialize :init
+
+  def init
+    self.discount ||= 0
+  end
 
   def update_order_remove_item
     if self.orders.length > 0
       @order = self.orders.first
-      total = @order.items_total - self.price
+      total = @order.items_total - (self.price - (self.price * self.discount))
       location = self.orders.first.store_location
       sales_tax = 0.09
       if  location == "San Rafael"

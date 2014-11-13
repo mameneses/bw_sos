@@ -4,9 +4,9 @@
 <%= label_tag(:oakland_tax, "Oakland Tax:") %>
 <%= number_field_tag :oakland_tax, "#{@oakland_tax}", :step => "any", style:"width:70px"%> <span>Current: <%=@oakland_tax* 100%>%<br>
 <%= label_tag(:san_bruno_tax, "San Bruno Tax:") %>
-<%= number_field_tag :san_bruno_tax, "#{@san_bruno_tax}", :step => "any", style:"width:70px"%> <span>Current: <%=@san_bruno_tax* 100%>%<br>
+<%= number_field_tag :san_bruno_tax, "#{@san_bruno_tax}", :step => "any", style:"width:70px"%> <span>Current: <%=@san_bruno_tax * 100%>%<br>
 <%= label_tag(:san_rafael_tax, "San Rafael Tax:") %>
-<%= number_field_tag :san_rafael_tax, "#{@san_rafael_tax}", :step => "any", style:"width:70px" %> <span>Current: <%=@san_rafael_tax * 100%>%</span> <br> <br>
+<%= number_field_tag :san_rafael_tax, "#{@san_rafael_tax}", :step => "any", style:"width:70px" %> <span>Current: <%=number_to_percentage(@san_rafael_tax * 100  ) %></span> <br> <br>
 <%= submit_tag"Update Settings", class:"btn btn-primary" %><br>
 
 <% end %>

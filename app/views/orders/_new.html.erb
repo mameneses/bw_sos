@@ -5,10 +5,10 @@
   <%= f.text_field :placed_by, value: "#{@user.first_name}" %><br>
 
   <%= f.label :placed_date%>:
-  <%= f.date_select :placed_date, value: "#{Time.now.asctime}"  %><br>
+  <%= f.date_select :placed_date, value: "#{Date.today}"  %><br>
 
   <%= f.label :follow_up_date %>:
-  <%= f.date_select :follow_up_date, value: "#{Time.now.asctime}"%><br>
+  <%= f.date_select :follow_up_date, value: "#{Date.today + 14.days}"%><br>
 
   <%= f.label :store_location %>:
   <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"Oakland" %><br>

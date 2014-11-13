@@ -67,18 +67,26 @@ class ReceiptPdf < Prawn::Document
       text "Items Total: #{number_to_currency(@order.items_total)}"
       text "Tax: #{number_to_currency(@order.tax)}"
       text "Total w/ Tax: #{number_to_currency(@order.total_with_tax)}"
-      text "Delivery: #{number_to_currency(@order.delivery)}"
+      text "Delivery w/ Tax: #{number_to_currency(@order.delivery_with_tax)}"
       text "Assembly: #{number_to_currency(@order.assembly)}"
       text "Grand Total: #{number_to_currency(@order.grand_total)}", size: 14, style: :bold
       text "Desposit: #{number_to_currency(@order.deposit)}"
       text "Balance Due: #{number_to_currency(@order.balance_due)}",size: 14, style: :bold
     end
   end
+
+  def format_discount (decimal)
+    if decimal == 1 || decimal == nil
+      "None"
+    else
+      number_to_percentage((decimal * 100), precision: 0)
+    end
+  end
  
   def product_rows
-    [['Company', 'Model', 'Description', "Price"]] +
+    [['Company', 'Model', 'Description', "Price", "Discount"]] +
       @products.map do |product|
-      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}"]
+      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}","#{format_discount(product.discount)}"]
     end
   end
 

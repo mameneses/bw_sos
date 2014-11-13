@@ -8,6 +8,7 @@ class Order < ActiveRecord::Base
     self.tax ||= 0
     self.total_with_tax ||= 0
     self.delivery ||= 0
+    self.delivery_with_tax ||= 0
     self.assembly ||= 0
     self.grand_total ||= 0
     self.deposit ||= 0

@@ -35,7 +35,7 @@ module OrderHelper
   end
 
   def discount_options ()
-    discount_options =   [["None",1],
+    discount_options =   [["None",0.0],
                           ["5%",0.05],
                           ["10%",0.1],
                           ["15%",0.15],
@@ -52,13 +52,13 @@ module OrderHelper
                           ["70%",0.75],
                           ["80%",0.8],
                           ["85%",0.85],
-                          ["100%",0.0],
+                          ["100%",0.1],
                          ]
     return discount_options                     
   end
 
   def format_discount (decimal)
-    if decimal == 1 || decimal == nil
+    if decimal == 0 || decimal == nil
       "None"
     else
       number_to_percentage((decimal * 100), precision: 0)

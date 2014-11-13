@@ -1,8 +1,13 @@
 class OrdersController < ApplicationController
 
   def index
-    @follow_ups = Order.where(follow_up_date: Date.today).order(updated_at: :asc)
-    @orders = Order.order(created_at: :desc).first(15)
+    if params[:date]
+      @follow_ups = Order.where(follow_up_date: params[:date]).order(updated_at: :asc)
+      @follow_up_date = params[:date]
+    else  
+      @follow_ups = Order.where(follow_up_date: Date.today).order(updated_at: :asc)
+    end
+    @orders = Order.order(created_at: :desc)
   end
 
   def show

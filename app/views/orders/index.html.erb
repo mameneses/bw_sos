@@ -1,4 +1,24 @@
-<h2>Today's Follow Ups</h2>
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Follow Ups for
+    <% if @follow_up_date %>
+      <% if Date.parse(@follow_up_date) == Date.today %>
+        Today
+      <% else %>
+       <%= Date.parse(@follow_up_date).strftime("%m/%d/%Y") %>
+      <% end %>
+    <% else %>
+        Today
+    <% end %>
+    </h2>
+  </div>
+  <div class="col-sm-6">
+    <%= form_tag(orders_path, method: "get") do %>
+      <%= date_field_tag(:date, "Follow Ups for:", value: "#{Time.now}") %>
+      <%= submit_tag("Go To Folloup Date", class:"btn btn-sm btn-primary") %>
+    <% end %>
+  </div>
+</div>
 <div class="row" >
   <table class="table">
     <tr>
@@ -24,7 +44,7 @@
             <td> 
               <%= form_for order, as: :order, url: "/orders/#{order.id}", method: :put do |f| %>
                 <%= hidden_field_tag "follow_up_page", "true" %>
-                <%= f.text_field :notes, value: "#{order.notes}", style:"width:300px" %>
+                <%= f.text_area :notes, value: "#{order.notes}", style:"width:300px; height:28px" %>
                 <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
               <% end %>
             </td>
@@ -33,7 +53,7 @@
   <% else %>
     <tr>
       <td>
-        <h4> No Follow Ups Today </h4>
+        <h4> No Follow Ups </h4>
       <td>
     <tr>
   <% end %>
