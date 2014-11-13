@@ -1,7 +1,7 @@
 defaults: &defaults
-  # oakland_tax: 0.09
-  # san_bruno_tax: 0.09
-  # san_rafael_tax: 0.0925
+  oakland_tax: 0.09
+  san_bruno_tax: 0.09
+  san_rafael_tax: 0.0925
 
 development:
   <<: *defaults
@@ -13,3 +13,4 @@ test:
 
 production:
   <<: *defaults
+ 
