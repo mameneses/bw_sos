@@ -20,7 +20,7 @@ class Product < ActiveRecord::Base
       end
       tax = total * sales_tax.to_f
       total_w_tax = total + tax
-      g_total = total_w_tax + @order.delivery + @order.assembly
+      g_total = total_w_tax + @order.delivery_with_tax + @order.assembly
       b_due = g_total - @order.deposit
       @order.update(items_total: total, tax: tax, total_with_tax: total_w_tax, grand_total: g_total, balance_due: b_due)
     end

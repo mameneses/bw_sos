@@ -41,6 +41,7 @@
         <th>Model</th>
         <th>Description</th>
         <th>Price</th>
+        <th>Discount</th>
       </tr>
       <% @order.products.each do |product| %>
         <tr>
@@ -48,6 +49,7 @@
           <td><%=product.model_type %></td>
           <td><%=product.description %></td>
           <td><%=number_to_currency(product.price) %></td>
+          <td><%=format_discount(product.discount) %></td>
           <td>
           <%= form_for product, method: :delete do |f| %>
               <%= f.hidden_field :order_id, value: "#{@order.id}" %>
@@ -62,6 +64,7 @@
         <td><%= f.text_field :model_type %></td>
         <td><%= f.text_field :description %></td>
         <td><%= f.text_field :price %></td>
+        <td><%= f.select :discount, options_for_select(discount_options(), selected: "None" ) %> </td> 
         <%= f.hidden_field :order_id, value: "#{@order.id}" %>
         <td><%= f.submit "Add Product", class: "btn-primary" %></td>
       </tr>
@@ -80,6 +83,7 @@
         <p> Tax: <%= number_to_currency(@order.tax) %> </p>
         <p> Total w/ tax: <%= number_to_currency(@order.total_with_tax) %> </p>
         <p> Delivery: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "")}" %> </p>
+        <p> Delivery w/ tax: <%= number_to_currency(@order.delivery_with_tax) %> </p>
         <p> Assembly: $ <%= f.text_field :assembly, value: "#{ number_to_currency(@order.assembly, unit: "")}" %> </p>
         <h4> Grand total: <%= number_to_currency(@order.grand_total) %> </h4>
         <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "")}" %> </p>

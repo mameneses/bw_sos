@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
       @product.errors.clear
       @order.products << @product
       @order = @product.orders.first
-      total = @order.items_total + @product.price
+      total = @order.items_total + (@product.price - (@product.price * @product.discount))
       location = @order.store_location
       sales_tax = 0.09
       if  location == "San Rafael"
@@ -63,7 +63,7 @@ class ProductsController < ApplicationController
  
  private
    def product_params
-     params.require(:product).permit(:company, :model_type, :description, :price)
+     params.require(:product).permit(:company, :model_type, :description, :price, :discount)
    end
 
    def product_order_id_params

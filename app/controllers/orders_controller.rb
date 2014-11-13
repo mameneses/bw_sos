@@ -53,8 +53,8 @@ class OrdersController < ApplicationController
       else location == "Oakland"
         sales_tax = Settings.oakland_tax
       end
-    @order.update(delivery:"#{@order.delivery * sales_tax + @order.delivery}")
-    g_total = @order.total_with_tax + @order.delivery + @order.assembly
+    @order.update(delivery_with_tax:"#{@order.delivery * sales_tax + @order.delivery}")
+    g_total = @order.total_with_tax + @order.delivery_with_tax + @order.assembly
     b_due = g_total - @order.deposit
     @order.update(grand_total: g_total, balance_due: b_due )
     if params[:follow_up_page]
@@ -72,7 +72,7 @@ class OrdersController < ApplicationController
 private
 
   def order_params
-    params.require(:order).permit(:placed_by, :placed_date, :follow_up_date, :customer_id, :items_total, :tax, :total_with_tax, :delivery, :assembly, :grand_total, :deposit, :balance_due, :notes, :purchased_by, :gift_note, :complete, :store_location, :updated_by)
+    params.require(:order).permit(:placed_by, :placed_date, :follow_up_date, :customer_id, :items_total, :tax, :total_with_tax, :delivery, :assembly, :grand_total, :deposit, :balance_due, :notes, :purchased_by, :gift_note, :complete, :store_location, :updated_by, :delivery_with_tax)
   end
 
 end
