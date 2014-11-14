@@ -30,8 +30,6 @@ gem 'spring',        group: :development
 # gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 
-gem 'fuzzily'
-
 gem "dynamic_form"
 
 gem 'wicked_pdf'

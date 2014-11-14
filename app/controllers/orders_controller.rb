@@ -58,10 +58,10 @@ class OrdersController < ApplicationController
       else location == "Oakland"
         sales_tax = Settings.oakland_tax
       end
-    @order.update(delivery_with_tax:"#{@order.delivery * sales_tax + @order.delivery}")
-    g_total = @order.total_with_tax + @order.delivery_with_tax + @order.assembly
-    b_due = g_total - @order.deposit
-    @order.update(grand_total: g_total, balance_due: b_due )
+    delivery_w_tax = @order.delivery * sales_tax + @order.delivery
+    grand_total = @order.total_with_tax + delivery_w_tax + @order.assembly
+    balance_due = grand_total - @order.deposit
+    @order.update(grand_total: grand_total, balance_due: balance_due, delivery_with_tax: delivery_w_tax )
     if params[:follow_up_page]
       redirect_to "/orders"
     else
