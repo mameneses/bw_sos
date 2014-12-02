@@ -50,6 +50,11 @@ class ProductsController < ApplicationController
   end
    
   def update
+    @product = Product.find(params[:id])
+    @order = Order.find(product_order_id_params[:order_id].to_i)
+    @order.update(updated_at: Time.now)
+    @product.update(product_params)
+    redirect_to "/orders/#{product_order_id_params[:order_id]}"
   end
 
   def destroy
@@ -62,7 +67,7 @@ class ProductsController < ApplicationController
  
 private
   def product_params
-    params.require(:product).permit(:company, :model_type, :description, :price, :discount)
+    params.require(:product).permit(:company, :model_type, :description, :price, :discount, :picked_up)
   end
 
   def product_order_id_params

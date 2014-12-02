@@ -8,6 +8,7 @@ class Product < ActiveRecord::Base
 
   def init
     self.discount ||= 0
+    self.picked_up ||= false
   end
 
   def update_order_remove_item

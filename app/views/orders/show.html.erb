@@ -42,6 +42,7 @@
         <th>Description</th>
         <th>Price</th>
         <th>Discount</th>
+        <th>Picked Up?</th>
       </tr>
       <% @order.products.each do |product| %>
         <tr>
@@ -50,12 +51,23 @@
           <td><%=product.description %></td>
           <td><%=number_to_currency(product.price) %></td>
           <td><%=format_discount(product.discount) %></td>
+          <%= form_for product, method: :patch do |f| %>
+            <td>
+              <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up}" %>
+            </td>
+            <td>
+            </td>
+            <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+            <td>
+              <%= f.submit value: "update", class: "btn-primary" %>
+              </td>
+            <% end %>
           <td>
-          <%= form_for product, method: :delete do |f| %>
+            <%= form_for product, method: :delete do |f| %>
               <%= f.hidden_field :order_id, value: "#{@order.id}" %>
               <%= f.submit value: "Delete", class: "btn-danger" %>
-              <% end %>
-            </td>
+            <% end %>
+          </td>
         </tr>
       <% end %>
       <tr>
