@@ -1,5 +1,12 @@
 class ProductsController < ApplicationController
   def index
+    if params[:date]
+      @pick_up_products = Product.where(pick_up_date: params[:date]).order(updated_at: :asc)
+      @pick_up_date = params[:date]
+    else  
+      @pick_up_products = Product.where(pick_up_date: Date.today).order(updated_at: :asc)
+    end
+
     if params[:q]
       query = params[:q]
       @products = Product.where("LOWER(company) LIKE LOWER(?)", "%#{query}%").order(created_at: :desc).concat(Product.where("LOWER(model_type) LIKE LOWER(?)", "%#{query}%")).uniq
@@ -54,7 +61,11 @@ class ProductsController < ApplicationController
     @order = Order.find(product_order_id_params[:order_id].to_i)
     @order.update(updated_at: Time.now)
     @product.update(product_params)
-    redirect_to "/orders/#{product_order_id_params[:order_id]}"
+    if params[:products_index]
+      redirect_to "/products"
+    else
+      redirect_to "/orders/#{product_order_id_params[:order_id]}"
+    end
   end
 
   def destroy
@@ -72,6 +83,10 @@ private
 
   def product_order_id_params
     params.require(:product).permit(:order_id)
+  end
+
+  def product_products_index_params
+    params.require(:product).permit(:products_index)
   end
 
 end

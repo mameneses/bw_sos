@@ -1,7 +1,76 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Pick Ups for
+    <% if @pick_up_date %>
+      <% if Date.parse(@pick_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
+        Today
+      <% else %>
+       <%= Date.parse(@pick_up_date).strftime("%m/%d/%Y") %>
+      <% end %>
+    <% else %>
+        Today
+    <% end %>
+    </h2>
+  </div>
+  <div class="col-sm-6">
+    <%= form_tag(products_path, method: "get") do %>
+      <%= date_field_tag(:date, "Pick Ups for:", value: "#{Date.today}") %>
+      <%= submit_tag("Go To Pick Up Date", class:"btn btn-sm btn-primary") %>
+    <% end %>
+  </div>
+</div>
+  <div class="row" >
+    <table class="table table-striped">
+      <tr>
+        <th>Company</th>
+        <th>Model</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Discount</th>
+        <th>Picked Up?</th>
+        <th>Pick Up Date</th>
+        <th> </th>  
+        <th>Orders</th>
+      </tr>
+      <% @pick_up_products.each do |product| %>
+        <tr>
+          <td><span class="glyphicon glyphicon-tag"></span> <%=product.company %></td>
+          <td><%=product.model_type %></td>
+          <td><%=product.description %></td>
+          <td><%=number_to_currency(product.price) %></td>
+          <td><%=format_discount(product.discount) %></td>
+          <%= form_for product, method: :patch do |f| %>
+            <td>
+              <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
+            </td>
+            <td>
+              <%= f.date_field :pick_up_date, value: "#{product.pick_up_date}" %>
+            </td>
+            <%= f.hidden_field :order_id, value: "#{product.orders.first.id}" %>
+            <%= hidden_field_tag "products_index", "true" %>
+            <td>
+              <%= f.submit value: "update", class: "btn-primary" %>
+              </td>
+          <% end %>
+          <% orders = product.orders %>
+          <% if orders.length > 0 %>
+            <% orders.each do |order| %>
+              <td><span class="glyphicon glyphicon-list-alt"></span>
+                <%= link_to(order) do %>
+                  <%= order.customer.first_name %> <%= order.customer.last_name %> - <%= order.store_location %>
+                <% end %>
+              </td>
+          <% end %>
+        </tr>
+      <% end %>
+      <% end %>
+    </table>
+  </div>
+
 <% if params[:q] %>
-<h2> Products result for "<%= params[:q] %>" </h2>
+  <h2> Products result for "<%= params[:q] %>" </h2>
 <% else %>
-<h2>Products</h2>
+  <h2>Products</h2>
 <% end %>
 <%= form_tag(products_path, method: "get") do %>
   <%= label_tag(:q, "Search for Products:") %>
@@ -15,6 +84,8 @@
     <th>Model</th>
     <th>Description</th>
     <th>Price</th>
+    <th>Picked Up?</th>
+    <th>Pick Up Date</th>
     <th>Orders</th>
   </tr>
   <% @products.each do |product| %>
@@ -24,6 +95,8 @@
       <td><%= product.model_type %></td>
       <td><%= product.description%></td>
       <td><%= number_to_currency(product.price) %></td>
+      <td><%= product.picked_up ? "Yes" : "Not Yet" %></td>
+      <td><%= product.pick_up_date%></td>
       <% orders = product.orders %>
         <% if orders.length > 0 %>
           <% orders.each do |order| %>
