@@ -53,7 +53,7 @@
           <td><%=format_discount(product.discount) %></td>
           <%= form_for product, method: :patch do |f| %>
             <td>
-              <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up}" %>
+              <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up ? product.picked_up : "Not yet"}" %>
             </td>
             <td>
             </td>
