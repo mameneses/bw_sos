@@ -43,6 +43,7 @@
         <th>Price</th>
         <th>Discount</th>
         <th>Picked Up?</th>
+        <th>Pick Up Date</th>
       </tr>
       <% @order.products.each do |product| %>
         <tr>
@@ -56,6 +57,7 @@
               <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
             </td>
             <td>
+              <%= f.date_field :pick_up_date, value: "#{product.pick_up_date}" %>
             </td>
             <%= f.hidden_field :order_id, value: "#{@order.id}" %>
             <td>
