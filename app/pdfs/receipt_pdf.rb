@@ -76,7 +76,7 @@ class ReceiptPdf < Prawn::Document
   end
 
   def format_discount (decimal)
-    if decimal == 1 || decimal == nil
+    if decimal == 0 || decimal == nil
       "None"
     else
       number_to_percentage((decimal * 100), precision: 0)

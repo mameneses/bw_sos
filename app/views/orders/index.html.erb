@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <h2>Follow Ups for
     <% if @follow_up_date %>
-      <% if Date.parse(@follow_up_date) == Date.today %>
+      <% if Date.parse(@follow_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
         Today
       <% else %>
        <%= Date.parse(@follow_up_date).strftime("%m/%d/%Y") %>
@@ -14,7 +14,7 @@
   </div>
   <div class="col-sm-6">
     <%= form_tag(orders_path, method: "get") do %>
-      <%= date_field_tag(:date, "Follow Ups for:", value: "#{Time.now}") %>
+      <%= date_field_tag(:date, "Follow Ups for:", value: "#{Date.today}") %>
       <%= submit_tag("Go To Folloup Date", class:"btn btn-sm btn-primary") %>
     <% end %>
   </div>

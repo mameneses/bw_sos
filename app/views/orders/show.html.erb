@@ -5,14 +5,14 @@
   <h2><%= @customer.first_name %> <%= @customer.last_name %> </h2> 
 <% end %>
     <%= button_to "#{order_path(@order)}.pdf", method: :get, class:"btn btn-default" do %>
-      <span class="glyphicon glyphicon-save"> Receipt </span>
+      <span class="glyphicon glyphicon-save"> Print Order </span>
     <% end %>
     <h4> Order Info </h4>
     <%= form_for @order, url: {action: "update"} do |f| %>
       <p> Store Location: <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %></p>
       <p> Place by: <%= f.text_field :placed_by, value: "#{@order.placed_by}" %> </p>
-      <p> Placed: <%= f.date_select :placed_date, value: "#{Time.now.asctime}"  %> </p>
-      <p> Follow: <%= f.date_select :follow_up_date, value: "#{@order.follow_up_date}"%></p>
+      <p> Placed: <%= f.date_field :placed_date, value: "#{@order.placed_date}"  %> </p>
+      <p> Follow: <%= f.date_field :follow_up_date, value: "#{@order.follow_up_date}"%></p>
       <h4>Gift Info</h4>
       <p> Purchased by: <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %> </p>
       <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}" %> </p>

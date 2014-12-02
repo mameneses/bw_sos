@@ -18,7 +18,7 @@ module OrderHelper
                           ["70%",0.75],
                           ["80%",0.8],
                           ["85%",0.85],
-                          ["100%",0.1],
+                          ["100%",1]
                          ]
     return discount_options                     
   end
