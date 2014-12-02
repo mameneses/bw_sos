@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
     @order = Order.find(product_order_id_params[:order_id].to_i)
     @product = Product.create(product_params)
     if @product.valid? == false
-      redirect_to "/orders/#{product_order_id_params[:order_id]}/edit"
+      redirect_to "/orders/#{product_order_id_params[:order_id]}"
     else
       @order.update(updated_by:"#{current_user.first_name}")
       @product.errors.clear
