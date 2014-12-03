@@ -109,9 +109,9 @@
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
       <div class="row">
         <div class="col-sm-6"><%= f.submit "Update Order", class: "btn btn-primary"%></div>
+    <% end %>
         <div class="col-sm-6"><%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %></div>
       </div>
-    <% end %>
   </div>
 </div>
 <h1> </h1>
