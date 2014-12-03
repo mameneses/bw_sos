@@ -10,7 +10,11 @@ class Customer < ActiveRecord::Base
     end
 
     def style_phone_numbers
-      self.phone_num = self.phone_num.insert(0,"(").insert(4,")").insert(5," ").insert(9,"-")
-      self.alt_phone_num = self.alt_phone_num.insert(0,"(").insert(4,")").insert(5," ").insert(9,"-")
+      if self.phone_num != "" 
+        self.phone_num = self.phone_num.insert(0,"(").insert(4,")").insert(5," ").insert(9,"-")
+      end
+      if self.alt_phone_num != ""
+        self.alt_phone_num = self.alt_phone_num.insert(0,"(").insert(4,")").insert(5," ").insert(9,"-")
+      end
     end
 end
