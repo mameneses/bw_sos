@@ -29,8 +29,9 @@
         <th>Discount</th>
         <th>Picked Up?</th>
         <th>Pick Up Date</th>
-        <th> </th>  
-        <th>Print Order</th>
+        <th> </th> 
+        <th>Print</th> 
+        <th>Order</th>
       </tr>
       <% if @pick_up_products.length > 0 %>
         <% @pick_up_products.each do |product| %>
@@ -58,9 +59,13 @@
                 <td>
                 <% orders.each do |order| %>
                   <%= button_to "#{order_path(order)}.pdf", method: :get, class:"btn btn-default" do %>
-                    <span class="glyphicon glyphicon-list-alt"></span>
-                    <%= order.customer.first_name %> <%= order.customer.last_name %> - <%= order.store_location %>
+                    <span class="glyphicon glyphicon-print"></span>
                 <% end %>
+                </td>
+                <td><span class="glyphicon glyphicon-list-alt"></span>
+                  <%= link_to(orders.first) do %>
+                    <%= orders.first.customer.first_name %> <%= orders.first.customer.last_name %> - <%= orders.first.store_location %>
+                  <% end %>
                 </td>
               <% end %>
             <% end %>

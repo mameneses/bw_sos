@@ -27,6 +27,7 @@
             <th>Address</th>
             <th>Phone</th>
             <th>Email</th>
+            <th>Pending Orders</th>
           </tr>
         <% @customers.each do |customer| %>
           <tr>
@@ -38,7 +39,14 @@
             <td><%= customer.address %> <%= customer.city %> <%= customer.state %></td> 
             <td><%= number_to_phone(customer.phone_num, area_code: true) %></td>
             <td><%= customer.email %></td>
-            </tr>
+            <td>
+              <% customer.orders.each do |order| %>
+                <%= link_to(order)  do %>
+                  <span class="glyphicon glyphicon-list-alt"></span>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
         </table>
       </div>
