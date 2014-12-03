@@ -1,22 +1,22 @@
 <div class="row">
-  <div class="col-sm-7">
+  <div class="col-sm-5">
     <h2> Order  for 
     <%=link_to @customer do %>
       <%= @customer.first_name %> <%= @customer.last_name %>
     <% end %>
     </h2>
-    <%= button_to "#{order_path(@order)}.pdf", method: :get, class:"btn btn-default" do %>
-      <span class="glyphicon glyphicon-save"> Print Order </span>
-    <% end %>
   </div>
   <div class="col-sm-2">
-    <h4>Address Info </h4>
+   
+  </div>
+  <div class="col-sm-2 order-show-address">
+    <h4>Address Info <span class="caret"></span></h4>
     <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
     <p><%= "#{@customer.address}" %></p>
     <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
   </div>
-  <div class="col-sm-3">
-    <h4>Contact Info</h4>
+  <div class="col-sm-3 order-show-address">
+    <h4>Contact Info <span class="caret"></span></h4>
     <p>Main Phone: <%= number_to_phone(@customer.phone_num, area_code: true) %> </p>
     <p>Alternate Phone: <%= number_to_phone(@customer.alt_phone_num, area_code: true) %></p>
     <p>Email: <%="#{@customer.email}" %></p>
@@ -63,10 +63,10 @@
     <% end %>
     <tr>
     <%= form_for @product, as: :product, url: products_path, method: :post do |f| %>
-      <td><%= f.text_field :company %></td>
-      <td><%= f.text_field :model_type %></td>
-      <td><%= f.text_field :description %></td>
-      <td><%= f.text_field :price, style: "width: 75px;"%></td>
+      <td><%= f.text_field :company, placeholder: "Company" %></td>
+      <td><%= f.text_field :model_type, placeholder: "Model"%></td>
+      <td><%= f.text_field :description, placeholder: "Description"%></td>
+      <td><%= f.text_field :price, placeholder: "$", style: "width: 75px;"%></td>
       <td><%= f.select :discount, options_for_select(discount_options(), selected: "None" ) %> </td> 
       <%= f.hidden_field :order_id, value: "#{@order.id}" %>
       <td><%= f.submit "Add Product", class: "btn-primary" %></td>
@@ -76,6 +76,9 @@
 </div>
 <div class="row">
   <div class="col-sm-3">
+    <%= button_to "#{order_path(@order)}.pdf", method: :get, class:"btn btn-default" do %>
+      <span class="glyphicon glyphicon-print"> Print Order </span>
+    <% end %>
     <h4> Order Info </h4>
     <%= form_for @order, url: {action: "update"} do |f| %>
       <p> Store Location: <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %></p>

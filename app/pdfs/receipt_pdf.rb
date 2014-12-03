@@ -98,10 +98,10 @@ class ReceiptPdf < Prawn::Document
 
      bounding_box([-10, 80], :width => 800, :height => 150) do
       text "*Any Order cancelled will require a 20% charge of the total price."
-      text "*Refund Ploicy: No cash refunds. Full exchange or store crdit within 30 days of purchase date."
+      text "*Refund Policy: No cash refunds. Full exchange or store credit within 30 days of purchase date."
       text "*Please give 24 hour notice for pick up."
       text "*Prices and availability are subject to change at any time without notice."
-      text "*Once items are picked up by the customer from the store, Baby World is not responsible for any damamges."
+      text "*Once items are picked up by the customer from the store, Baby World is not responsible for any damages."
     end
   end
 end

@@ -42,17 +42,17 @@
             <td><%=number_to_currency(product.price) %></td>
             <td><%=format_discount(product.discount) %></td>
             <%= form_for product, method: :patch do |f| %>
+              <%= hidden_field_tag "products_index", "true" %>
+              <%= f.hidden_field :order_id, value: "#{product.orders.first.id}" %>
               <td>
                 <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
               </td>
               <td>
                 <%= f.date_field :pick_up_date, value: "#{product.pick_up_date}" %>
               </td>
-              <%= f.hidden_field :order_id, value: "#{product.orders.first.id}" %>
-              <%= hidden_field_tag "products_index", "true" %>
               <td>
                 <%= f.submit value: "update", class: "btn-primary" %>
-                </td>
+              </td>
             <% end %>
             <% orders = product.orders %>
             <% if orders.length > 0 %>
@@ -89,7 +89,7 @@
 <% end %>
 <%= form_tag(products_path, method: "get") do %>
   <%= label_tag(:q, "Search for Products:") %>
-  <%= text_field_tag(:q) %>
+  <%= text_field_tag(:q, nil, placeholder:"Company or Model") %>
   <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
 <% end %>
 <br>

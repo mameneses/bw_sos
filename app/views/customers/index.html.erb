@@ -17,7 +17,7 @@
       <div class="col-sm-12">
         <%= form_tag(customers_path, method: "get") do %>
           <%= label_tag(:q, "Search for Customer:") %>
-          <%= text_field_tag(:q) %>
+          <%= text_field_tag(:q, nil, placeholder:"First or Last Name") %>
           <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
         <% end %>
         <br>
