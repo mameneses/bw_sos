@@ -26,6 +26,7 @@
             <th>Name</th>
             <th>Address</th>
             <th>Phone</th>
+            <th>Email</th>
           </tr>
         <% @customers.each do |customer| %>
           <tr>
@@ -35,7 +36,8 @@
             <% end %>
             </td>
             <td><%= customer.address %> <%= customer.city %> <%= customer.state %></td> 
-            <td><%=customer.phone_num %></td>
+            <td><%= number_to_phone(customer.phone_num, area_code: true) %></td>
+            <td><%= customer.email %></td>
             </tr>
         <% end %>
         </table>
