@@ -1,12 +1,83 @@
 <div class="row">
-  <div class="col-lg-3">
-<h2> Order  for </h2>
-<%=link_to @customer do %>
-  <h2><%= @customer.first_name %> <%= @customer.last_name %> </h2> 
-<% end %>
+  <div class="col-lg-4">
+    <h2> Order  for 
+    <%=link_to @customer do %>
+      <%= @customer.first_name %> <%= @customer.last_name %>
+    <% end %>
+    </h2>
     <%= button_to "#{order_path(@order)}.pdf", method: :get, class:"btn btn-default" do %>
       <span class="glyphicon glyphicon-save"> Print Order </span>
     <% end %>
+  </div>
+  <div class="col-lg-2">
+  </div>
+  <div class="col-lg-2">
+    <h4>Address Info </h4>
+    <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
+    <p><%= "#{@customer.address}" %></p>
+    <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
+  </div>
+  <div class="col-lg-3">
+    <h4>Contact Info</h4>
+    <p>Main Phone: <%= number_to_phone(@customer.phone_num, area_code: true) %> </p>
+    <p>Alternate Phone: <%= number_to_phone(@customer.alt_phone_num, area_code: true) %></p>
+    <p>Email: <%="#{@customer.email}" %></p>
+  </div>
+</div>
+<div class="row">
+  <h3>Products</h3>
+  <table class="table table-striped">
+    <tr>
+      <th>Company</th>
+      <th>Model</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Discount</th>
+      <th>Picked Up?</th>
+      <th>Pick Up Date</th>
+    </tr>
+    <% @order.products.each do |product| %>
+      <tr>
+        <td><span class="glyphicon glyphicon-tag"></span> <%=product.company %></td>
+        <td><%=product.model_type %></td>
+        <td><%=product.description %></td>
+        <td><%=number_to_currency(product.price) %></td>
+        <td><%=format_discount(product.discount) %></td>
+        <%= form_for product, method: :patch do |f| %>
+          <td>
+            <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
+          </td>
+          <td>
+            <%= f.date_field :pick_up_date, value: "#{product.pick_up_date}", style: "width: 138px;" %>
+          </td>
+          <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+          <td>
+            <%= f.submit value: "update", class: "btn-primary" %>
+            </td>
+          <% end %>
+        <td>
+          <%= form_for product, method: :delete do |f| %>
+            <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+            <%= f.submit value: "Delete", class: "btn-danger" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr>
+    <%= form_for @product, as: :product, url: products_path, method: :post do |f| %>
+      <td><%= f.text_field :company %></td>
+      <td><%= f.text_field :model_type %></td>
+      <td><%= f.text_field :description %></td>
+      <td><%= f.text_field :price, style: "width: 75px;"%></td>
+      <td><%= f.select :discount, options_for_select(discount_options(), selected: "None" ) %> </td> 
+      <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+      <td><%= f.submit "Add Product", class: "btn-primary" %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<div class="row">
+  <div class="col-lg-3">
     <h4> Order Info </h4>
     <%= form_for @order, url: {action: "update"} do |f| %>
       <p> Store Location: <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %></p>
@@ -17,104 +88,30 @@
       <p> Purchased by: <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %> </p>
       <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}" %> </p>
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
-      <%= f.submit "Update Info", class: "btn btn-primary"%>
-    <% end %>
-
-      <h4>Address Info </h4>
-      <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
-      <p><%= "#{@customer.address}" %></p>
-      <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
-
-      <h4>Contact Info</h4>
-      <p>Main Phone: <%= "#{@customer.phone_num}" %> </p>
-      <p>Alternate Phone: <%="#{@customer.alt_phone_num}" %></p>
-      <p>Email: <%="#{@customer.email}" %></p>
-
-      <%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %>
   </div>
-  <div class="col-lg-9">
-    <div class="row" >
-    <h3>Products</h3>
-    <table class="table table-striped">
-      <tr>
-        <th>Company</th>
-        <th>Model</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Discount</th>
-        <th>Picked Up?</th>
-        <th>Pick Up Date</th>
-      </tr>
-      <% @order.products.each do |product| %>
-        <tr>
-          <td><span class="glyphicon glyphicon-tag"></span> <%=product.company %></td>
-          <td><%=product.model_type %></td>
-          <td><%=product.description %></td>
-          <td><%=number_to_currency(product.price) %></td>
-          <td><%=format_discount(product.discount) %></td>
-          <%= form_for product, method: :patch do |f| %>
-            <td>
-              <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
-            </td>
-            <td>
-              <%= f.date_field :pick_up_date, value: "#{product.pick_up_date}" %>
-            </td>
-            <%= f.hidden_field :order_id, value: "#{@order.id}" %>
-            <td>
-              <%= f.submit value: "update", class: "btn-primary" %>
-              </td>
-            <% end %>
-          <td>
-            <%= form_for product, method: :delete do |f| %>
-              <%= f.hidden_field :order_id, value: "#{@order.id}" %>
-              <%= f.submit value: "Delete", class: "btn-danger" %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-      <tr>
-      <%= form_for @product, as: :product, url: products_path, method: :post do |f| %>
-        <td><%= f.text_field :company %></td>
-        <td><%= f.text_field :model_type %></td>
-        <td><%= f.text_field :description %></td>
-        <td><%= f.text_field :price %></td>
-        <td><%= f.select :discount, options_for_select(discount_options(), selected: "None" ) %> </td> 
-        <%= f.hidden_field :order_id, value: "#{@order.id}" %>
-        <td><%= f.submit "Add Product", class: "btn-primary" %></td>
-      </tr>
-      <% end %>
-    </table>
-    </div>
-    <div class="row">
-    <%= form_for @order, url: {action: "update"} do |f| %>
-      <div class="col-sm-8">
-        <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:64%" %> </p>
-  <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
+  <div class="col-lg-5">
+      <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:64%" %> </p>
+      <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
+  </div>
+  <div class="col-sm-4">
+      <p> Items total: <%= number_to_currency(@order.items_total) %> </p>
+      <p> Tax: <%= number_to_currency(@order.tax) %> </p>
+      <p> Total w/ tax: <%= number_to_currency(@order.total_with_tax) %> </p>
+      <p> Delivery: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "")}" %> </p>
+      <p> Delivery w/ tax: <%= number_to_currency(@order.delivery_with_tax) %> </p>
+      <p> Assembly: $ <%= f.text_field :assembly, value: "#{ number_to_currency(@order.assembly, unit: "")}" %> </p>
+      <h4> Grand total: <%= number_to_currency(@order.grand_total) %> </h4>
+      <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "")}" %> </p>
+      <h3> Balance due: <%= number_to_currency(@order.balance_due) %> </h3>
+      <p> Complete:  <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %> </p>
+      <br>
+      <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
+      <div class="row">
+        <div class="col-lg-6"><%= f.submit "Update Order", class: "btn btn-primary"%></div>
+        <div class="col-lg-6"><%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %></div>
       </div>
-      <div class="col-sm-4">
-        <br>
-        <p> Items total: <%= number_to_currency(@order.items_total) %> </p>
-        <p> Tax: <%= number_to_currency(@order.tax) %> </p>
-        <p> Total w/ tax: <%= number_to_currency(@order.total_with_tax) %> </p>
-        <p> Delivery: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "")}" %> </p>
-        <p> Delivery w/ tax: <%= number_to_currency(@order.delivery_with_tax) %> </p>
-        <p> Assembly: $ <%= f.text_field :assembly, value: "#{ number_to_currency(@order.assembly, unit: "")}" %> </p>
-        <h4> Grand total: <%= number_to_currency(@order.grand_total) %> </h4>
-        <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "")}" %> </p>
-        <h3> Balance due: <%= number_to_currency(@order.balance_due) %> </h3>
-        <p> Complete:  <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %> </p>
-        <br>
-        <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
-        <%= f.submit "Update Order", class: "btn btn-primary"%>
     <% end %>
-
-      </div>
-    </div>
   </div>
 </div>
-  <div class="row">
-  <div class="col-lg-3">
-  </div>
-    <div class="col-lg-3">
-    </div>
-  </div>
+<h1> </h1>
+

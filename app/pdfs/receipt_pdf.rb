@@ -50,8 +50,8 @@ class ReceiptPdf < Prawn::Document
       text " "
       text " "
       text " "
-      text "Phone: #{@customer.phone_num}"
-      text "Alt Phone: #{@customer.alt_phone_num}"
+      text "Phone: #{number_to_phone(@customer.phone_num, area_code: true)}"
+      text "Alt Phone: #{number_to_phone(@customer.alt_phone_num, area_code: true)}"
     end
   end
  

@@ -11,8 +11,8 @@
         <p><%= "#{@customer.address}" %></p>
         <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
         <h4>Contant Info</h4>
-        <p>Main Phone: <%= "#{@customer.phone_num}" %> </p>
-        <p>Alternate Phone: <%="#{@customer.alt_phone_num}" %></p>
+        <p>Main Phone: <%= number_to_phone(@customer.phone_num, area_code: true) %> </p>
+        <p>Alternate Phone: <%= number_to_phone(@customer.alt_phone_num, area_code: true) %></p>
         <p>Email: <%="#{@customer.email}" %></p>
       <%= button_to "Edit Info", edit_customer_path(@customer), method: :get, class:"btn btn-default" %>
     </div>
