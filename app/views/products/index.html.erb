@@ -62,8 +62,9 @@
                     <span class="glyphicon glyphicon-print"></span>
                 <% end %>
                 </td>
-                <td><span class="glyphicon glyphicon-list-alt"></span>
+                <td>
                   <%= link_to(orders.first) do %>
+                    <span class="glyphicon glyphicon-list-alt"></span>
                     <%= orders.first.customer.first_name %> <%= orders.first.customer.last_name %> - <%= orders.first.store_location %>
                   <% end %>
                 </td>
@@ -114,8 +115,9 @@
       <% orders = product.orders %>
         <% if orders.length > 0 %>
           <% orders.each do |order| %>
-            <td><span class="glyphicon glyphicon-list-alt"></span>
+            <td>
               <%= link_to(order) do %>
+                <span class="glyphicon glyphicon-list-alt"></span>
                 <%= order.customer.first_name %> <%= order.customer.last_name %> - <%= order.store_location %>
               <% end %>
             </td>

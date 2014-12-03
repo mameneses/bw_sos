@@ -31,8 +31,9 @@
           </tr>
         <% @customers.each do |customer| %>
           <tr>
-            <td><span class="glyphicon glyphicon-user"></span>
+            <td>
             <%= link_to(customer) do %>
+              <span class="glyphicon glyphicon-user"></span>
               <strong><%= customer.first_name %> <%= customer.last_name %></strong> 
             <% end %>
             </td>

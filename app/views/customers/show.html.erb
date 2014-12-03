@@ -28,8 +28,9 @@
           <% @orders.each do |order| %>
             <% if order.complete == false %>
                 <tr>
-                  <td> <span class="glyphicon glyphicon-list-alt"></span>
+                  <td> 
                   <%= link_to (order_path(order)) do %>
+                    <span class="glyphicon glyphicon-list-alt"></span>
                     <strong><%= order.store_location %> </strong>
                   <% end %>
                   </td>
