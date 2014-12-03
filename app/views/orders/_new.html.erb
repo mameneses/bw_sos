@@ -5,15 +5,16 @@
   <%= f.text_field :placed_by, value: "#{@user.first_name}" %><br>
 
   <%= f.label :placed_date%>:
-  <%= f.date_select :placed_date, value: "#{Date.today}"  %><br>
+  <%= f.date_field :placed_date, value: "#{Date.today}"  %><br>
 
   <%= f.label :follow_up_date %>:
-  <%= f.date_select :follow_up_date, value: "#{Date.today + 14.days}"%><br>
+  <%= f.date_field :follow_up_date, value: "#{Date.today + 14.days}"%><br>
 
   <%= f.label :store_location %>:
   <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"Oakland" %><br>
 
   <%= f.text_field :customer_id, type: "hidden", value: "#{@customer.id.to_i}" %>
+  <%= f.hidden_field :updated_by, value: "#{@user.first_name}" %>
 
   <%= f.submit "Start Order", class:"btn btn-primary"%>
 

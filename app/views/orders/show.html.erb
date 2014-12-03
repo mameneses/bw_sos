@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-lg-4">
+  <div class="col-sm-7">
     <h2> Order  for 
     <%=link_to @customer do %>
       <%= @customer.first_name %> <%= @customer.last_name %>
@@ -9,15 +9,13 @@
       <span class="glyphicon glyphicon-save"> Print Order </span>
     <% end %>
   </div>
-  <div class="col-lg-2">
-  </div>
-  <div class="col-lg-2">
+  <div class="col-sm-2">
     <h4>Address Info </h4>
     <p><%= "#{@customer.first_name}" %> <%="#{@customer.last_name}" %></p>
     <p><%= "#{@customer.address}" %></p>
     <p><%= "#{@customer.city}" %>, <%= "#{@customer.state}" %> <%= "#{@customer.zip_code}" %></p>
   </div>
-  <div class="col-lg-3">
+  <div class="col-sm-3">
     <h4>Contact Info</h4>
     <p>Main Phone: <%= number_to_phone(@customer.phone_num, area_code: true) %> </p>
     <p>Alternate Phone: <%= number_to_phone(@customer.alt_phone_num, area_code: true) %></p>
@@ -77,7 +75,7 @@
   </table>
 </div>
 <div class="row">
-  <div class="col-lg-3">
+  <div class="col-sm-3">
     <h4> Order Info </h4>
     <%= form_for @order, url: {action: "update"} do |f| %>
       <p> Store Location: <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"#{@order.store_location}" %></p>
@@ -89,8 +87,8 @@
       <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}" %> </p>
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
   </div>
-  <div class="col-lg-5">
-      <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:64%" %> </p>
+  <div class="col-sm-5">
+      <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:100%;" %> </p>
       <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
   </div>
   <div class="col-sm-4">
@@ -107,8 +105,8 @@
       <br>
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
       <div class="row">
-        <div class="col-lg-6"><%= f.submit "Update Order", class: "btn btn-primary"%></div>
-        <div class="col-lg-6"><%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %></div>
+        <div class="col-sm-6"><%= f.submit "Update Order", class: "btn btn-primary"%></div>
+        <div class="col-sm-6"><%= button_to "Delete Order", order_path(@order), confirm: 'Are you sure?', class: "btn btn-danger",method: :delete %></div>
       </div>
     <% end %>
   </div>
