@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203235356) do
+ActiveRecord::Schema.define(version: 20141204203815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,13 +42,13 @@ ActiveRecord::Schema.define(version: 20141203235356) do
     t.integer  "customer_id"
     t.integer  "product_id"
     t.decimal  "items_total",       precision: 20, scale: 2, default: 0.0
-    t.decimal  "tax",               precision: 20, scale: 2
-    t.decimal  "total_with_tax",    precision: 20, scale: 2
-    t.decimal  "delivery",          precision: 20, scale: 2
-    t.decimal  "assembly",          precision: 20, scale: 2
-    t.decimal  "grand_total",       precision: 20, scale: 2
-    t.decimal  "deposit",           precision: 20, scale: 2
-    t.decimal  "balance_due",       precision: 20, scale: 2
+    t.decimal  "tax",               precision: 20, scale: 2, default: 0.0
+    t.decimal  "total_with_tax",    precision: 20, scale: 2, default: 0.0
+    t.decimal  "delivery",          precision: 20, scale: 2, default: 0.0
+    t.decimal  "assembly",          precision: 20, scale: 2, default: 0.0
+    t.decimal  "grand_total",       precision: 20, scale: 2, default: 0.0
+    t.decimal  "deposit",           precision: 20, scale: 2, default: 0.0
+    t.decimal  "balance_due",       precision: 20, scale: 2, default: 0.0
     t.text     "notes"
     t.string   "purchased_by"
     t.text     "gift_note"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20141203235356) do
     t.datetime "updated_at"
     t.string   "store_location"
     t.string   "updated_by"
-    t.decimal  "delivery_with_tax", precision: 20, scale: 2
+    t.decimal  "delivery_with_tax", precision: 20, scale: 2, default: 0.0
   end
 
   create_table "orders_products", id: false, force: true do |t|

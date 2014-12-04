@@ -14,7 +14,7 @@
   </div>
   <div class="col-sm-6">
     <%= form_tag(products_path, method: "get") do %>
-      <%= date_field_tag(:date, "Pick Ups for:", value: "#{Date.today}") %>
+      <%= date_field_tag(:date, "Pick Ups for:", value: "#{@pick_up_date ? @pick_up_date : Date.today}") %>
       <%= submit_tag("Go To Pick Up Date", class:"btn btn-sm btn-primary") %>
     <% end %>
   </div>

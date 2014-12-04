@@ -14,7 +14,7 @@
   </div>
   <div class="col-sm-6">
     <%= form_tag(orders_path, method: "get") do %>
-      <%= date_field_tag(:date, "Follow Ups for:", value: "#{Date.today}") %>
+      <%= date_field_tag(:date, "Follow Ups for:", value: "#{@follow_up_date ? @follow_up_date : Date.today}") %>
       <%= submit_tag("Go To Folloup Date", class:"btn btn-sm btn-primary") %>
     <% end %>
   </div>

@@ -21,7 +21,7 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.create(customer_params)
-    redirect_to "/customers"
+    redirect_to "/customers/#{@customer.id}"
   end
 
   def edit
