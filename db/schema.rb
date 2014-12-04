@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204203815) do
+ActiveRecord::Schema.define(version: 20141204213335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20141204203815) do
     t.string   "store_location"
     t.string   "updated_by"
     t.decimal  "delivery_with_tax", precision: 20, scale: 2, default: 0.0
+    t.boolean  "issue",                                      default: false
   end
 
   create_table "orders_products", id: false, force: true do |t|
