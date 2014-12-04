@@ -31,8 +31,9 @@
       <th>Description</th>
       <th>Price</th>
       <th>Discount</th>
-      <th>Picked Up?</th>
-      <th>Pick Up Date</th>
+      <th>Pick Up or Delivery?</th>
+      <th>Received?</th>
+      <th>Receiving Date</th>
     </tr>
     <% @order.products.each do |product| %>
       <tr>
@@ -42,6 +43,9 @@
         <td><%=number_to_currency(product.price) %></td>
         <td><%=format_discount(product.discount) %></td>
         <%= form_for product, method: :patch do |f| %>
+          <td>
+            <%= f.select :pickup_or_delivery, [["Pick Up", "Pick Up"],["Delivery", "Delivery"]], selected: "#{product.pickup_or_delivery}" %>
+          </td>
           <td>
             <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
           </td>
@@ -69,6 +73,9 @@
       <td><%= f.text_field :price, placeholder: "$", style: "width: 75px;"%></td>
       <td><%= f.select :discount, options_for_select(discount_options(), selected: "None" ) %> </td> 
       <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+      <td> 
+        <%= f.select :pickup_or_delivery, [["Pick Up", "Pick Up"],["Delivery", "Delivery"]], selected: "Pick Up" %>
+      </td>
       <td><%= f.submit "Add Product", class: "btn-primary" %></td>
     </tr>
     <% end %>

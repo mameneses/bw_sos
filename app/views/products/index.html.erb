@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-6">
-    <h2>Pick Ups for
+    <h2>Pick Ups and Deliveries for
     <% if @pick_up_date %>
       <% if Date.parse(@pick_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
         Today
@@ -27,8 +27,9 @@
         <th>Description</th>
         <th>Price</th>
         <th>Discount</th>
-        <th>Picked Up?</th>
-        <th>Pick Up Date</th>
+        <th>Pick Up or Delivery?</th>
+        <th>Receiving Date</th>
+        <th>Received?</th>
         <th> </th> 
         <th>Print</th> 
         <th>Order</th>
@@ -45,10 +46,13 @@
               <%= hidden_field_tag "products_index", "true" %>
               <%= f.hidden_field :order_id, value: "#{product.orders.first.id}" %>
               <td>
-                <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
+                <%= product.pickup_or_delivery %>
               </td>
               <td>
                 <%= f.date_field :pick_up_date, value: "#{product.pick_up_date}" %>
+              </td>
+              <td>
+                <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{product.picked_up != nil ? product.picked_up : "Not yet"}" %>
               </td>
               <td>
                 <%= f.submit value: "update", class: "btn-primary" %>
@@ -75,7 +79,7 @@
       <% else %>
       <tr>
         <td>
-          <h4>No Pick Ups</h4>
+          <h4>No Pick Ups or Deliveries</h4>
         </td>
       </tr>
       <% end %>

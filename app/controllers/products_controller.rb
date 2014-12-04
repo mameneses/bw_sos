@@ -78,7 +78,7 @@ class ProductsController < ApplicationController
  
 private
   def product_params
-    params.require(:product).permit(:company, :model_type, :description, :price, :discount, :picked_up, :pick_up_date)
+    params.require(:product).permit(:company, :model_type, :description, :price, :discount, :picked_up, :pick_up_date, :pickup_or_delivery)
   end
 
   def product_order_id_params
