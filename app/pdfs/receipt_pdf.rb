@@ -17,7 +17,7 @@ class ReceiptPdf < Prawn::Document
       text "Baby World", size: 15, style: :bold
       text "4400 Telegraph Ave", size: 10
       text "Oakland, CA 94609", size: 10
-      text "(510) 282-4406", size: 10
+      text "(510) 547-7040", size: 10
       text "http://www.babyworldonline.net", size: 10
       text "luz@babyworldonline.net", size: 10
     elsif @order.store_location == "San Bruno"
