@@ -25,3 +25,15 @@
        url('../assets/glyphicons-halflings-regular.ttf') format('truetype'), 
        url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
+
+.red {
+  color:red;
+}
+
+.lg-icon {
+  font-size: 30px;
+}
+
+.sm-icon {
+  font-size:20px;
+}

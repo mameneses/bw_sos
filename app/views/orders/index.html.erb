@@ -1,14 +1,14 @@
 <div class="row">
   <div class="col-sm-6">
-    <h2>Follow Ups for
+    <h2><span class="glyphicon glyphicon-earphone"></span> Follow Ups for
     <% if @follow_up_date %>
       <% if Date.parse(@follow_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
-        Today
+       Today
       <% else %>
        <%= Date.parse(@follow_up_date).strftime("%m/%d/%Y") %>
       <% end %>
     <% else %>
-        Today
+      Today 
     <% end %>
     </h2>
   </div>
@@ -26,6 +26,7 @@
       <th>Phone</th>
       <th>Products</th>
       <th>Notes</th>
+      <th> </th>
     </tr>
     <% if @follow_ups.length > 0 %>
       <% @follow_ups.each do |order| %>
@@ -49,6 +50,11 @@
                 <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
               <% end %>
             </td>
+            <td>
+              <% if order.issue == true %> 
+                <span class="glyphicon glyphicon-flag red sm-icon"></span> 
+              <% end %>
+            </td>
         </tr>
     <% end %>
   <% else %>
@@ -60,6 +66,56 @@
   <% end %>
   </table>
 </div>
+
+<div class="row" >
+  <h2> <span class="glyphicon glyphicon-flag"></span> Open Issues</h2>
+  <table class="table">  
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Products</th>
+      <th>Notes</th>
+      <th> </th>
+    </tr>
+    <% if @pending_issues.length > 0 %>
+      <% @pending_issues.each do |order| %>
+        <tr>
+            <td> 
+              <%= link_to (order_path(order)) do %>
+                <span class="glyphicon glyphicon-list-alt"></span>
+                <strong> <%= order.customer.first_name %> <%= order.customer.last_name %> </strong>
+              <% end %>
+            </td>
+            <td><%= number_to_phone(order.customer.phone_num, area_code: true) %></td>
+            <td> 
+              <% order.products.each do |product| %>
+                <p class="glyphicon glyphicon-tag"> <%= product.company %>  <%= product.model_type %>  <%= product.description %></p><br>
+              <% end %>
+            </td>
+            <td> 
+              <%= form_for order, as: :order, url: "/orders/#{order.id}", method: :put do |f| %>
+                <%= hidden_field_tag "follow_up_page", "true" %>
+                <%= f.text_area :notes, value: "#{order.notes}", style:"width:300px; height:28px" %>
+                <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
+              <% end %>
+            </td>
+            <td>
+              <% if order.issue == true %> 
+                <span class="glyphicon glyphicon-flag red sm-icon"></span> 
+              <% end %>
+            </td>
+        </tr>
+    <% end %>
+  <% else %>
+    <tr>
+      <td>
+        <h4> No Issues! Yay! </h4>
+      <td>
+    <tr>
+  <% end %>
+  </table>
+</div>
+
 
 <h2>Pending Orders</h2>
 <div class="row" >

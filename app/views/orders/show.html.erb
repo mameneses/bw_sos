@@ -4,6 +4,9 @@
     <%=link_to @customer do %>
       <%= @customer.first_name %> <%= @customer.last_name %>
     <% end %>
+    <% if @order.issue == true %> 
+      <span class="glyphicon glyphicon-flag red"></span> 
+    <% end %>
     </h2>
   </div>
   <div class="col-sm-2">
@@ -100,6 +103,8 @@
   <div class="col-sm-5">
       <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:100%;" %> </p>
       <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
+      <p> Issue?: <%= f.select :issue,[["Yes",true],["No", false]], value:"#{@order.issue}" %> (See Notes for issue specifics) 
+      </p>
   </div>
   <div class="col-sm-4">
       <p> Items total: <%= number_to_currency(@order.items_total) %> </p>
@@ -111,7 +116,7 @@
       <h4> Grand total: <%= number_to_currency(@order.grand_total) %> </h4>
       <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "")}" %> </p>
       <h3> Balance due: <%= number_to_currency(@order.balance_due) %> </h3>
-      <p> Complete:  <%= f.select :complete, ["true", "false"], value:"#{@order.complete}" %> </p>
+      <p> Complete:  <%= f.select :complete, [["Yes",true],["No", false]], value:"#{@order.complete}" %> </p>
       <br>
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
       <div class="row">

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-6">
-    <h2>Pick Ups and Deliveries for
+    <h2><span class="glyphicon glyphicon-send"></span> Pick Ups - Deliveries for
     <% if @pick_up_date %>
       <% if Date.parse(@pick_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
         Today
