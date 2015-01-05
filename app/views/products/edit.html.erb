@@ -1,0 +1,38 @@
+  
+  <h2> Edit Product </h2>
+  <table class="table table-striped">
+    <tr>
+      <th>Company</th>
+      <th>Model</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Discount</th>
+      <th>Pick Up or Delivery?</th>
+      <th>Received?</th>
+      <th>Receiving Date</th>
+    </tr>
+    <tr>
+    <%= form_for @product, method: :patch do |f| %>
+      <td><%= f.text_field :company, value: "#{@product.company}" %></td>
+      <td><%= f.text_field :model_type, value: "#{@product.model_type}"%></td>
+      <td><%= f.text_field :description, value: "#{@product.description}"%></td>
+      <td><%= number_to_currency(@product.price) %></td>
+      <td><%= format_discount(@product.discount) %></td> 
+      <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+      <td> 
+        <%= f.select :pickup_or_delivery, [["Pick Up", "Pick Up"],["Delivery", "Delivery"]], selected: "#{@product.pickup_or_delivery}" %>
+      </td>
+      <td>
+        <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{@product.picked_up}" %>
+      </td>
+      <td>
+        <%= f.date_field :pick_up_date, value: "#{@product.pick_up_date}", style: "width: 138px;" %>
+      </td>
+      <%= f.hidden_field :order_id, value: "#{@order.id}" %>
+      <td>
+        <%= f.submit value: "Update", class: "btn-primary" %>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+

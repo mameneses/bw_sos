@@ -1,15 +1,16 @@
 <div class="row">
   <div class="col-sm-6">
-    <h2><span class="glyphicon glyphicon-send"></span> Pick Ups - Deliveries for
-    <% if @pick_up_date %>
-      <% if Date.parse(@pick_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
-        Today
+    <h2>
+      <span class="glyphicon glyphicon-send"></span> Pick Ups - Deliveries for
+      <% if @pick_up_date %>
+        <% if Date.parse(@pick_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
+          Today
+        <% else %>
+         <%= Date.parse(@pick_up_date).strftime("%m/%d/%Y") %>
+        <% end %>
       <% else %>
-       <%= Date.parse(@pick_up_date).strftime("%m/%d/%Y") %>
+          Today
       <% end %>
-    <% else %>
-        Today
-    <% end %>
     </h2>
   </div>
   <div class="col-sm-6">

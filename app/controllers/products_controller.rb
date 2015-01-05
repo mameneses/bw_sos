@@ -54,6 +54,7 @@ class ProductsController < ApplicationController
 
   def edit
     @product = Product.find(params[:id])
+    @order = @product.orders.first
   end
    
   def update
