@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204213335) do
+ActiveRecord::Schema.define(version: 20150108011244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20141204213335) do
     t.boolean  "picked_up",                                   default: false
     t.date     "pick_up_date"
     t.string   "pickup_or_delivery",                          default: "Pickup"
+    t.boolean  "ready",                                       default: false
   end
 
   create_table "users", force: true do |t|

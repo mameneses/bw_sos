@@ -35,6 +35,7 @@
       <th>Price</th>
       <th>Discount</th>
       <th>Pick Up or Delivery?</th>
+      <th>Ready in store?</th>
       <th>Received?</th>
       <th>Receiving Date</th>
     </tr>
@@ -46,7 +47,8 @@
         <td><%= number_to_currency(product.price) %></td>
         <td><%= format_discount(product.discount) %></td>
         <td><%= product.pickup_or_delivery %></td>
-        <td><%= product.picked_up %></td>
+        <td><%= product.ready ? "Yes" : "Not yet" %></td>
+        <td><%= product.picked_up ? "Yes" : "Not Yet" %></td>
         <td><%= product.pick_up_date != nil ? product.pick_up_date.strftime("%m/%d/%Y") : Date.today.strftime("%m/%d/%Y") %></td>
         <td>
           <%= link_to "Edit", edit_product_path(product), class: "btn btn-primary" %>
@@ -70,6 +72,9 @@
       <%= f.hidden_field :pick_up_date,value:"#{Date.today}" %> 
       <td> 
         <%= f.select :pickup_or_delivery, [["Pick Up", "Pick Up"],["Delivery", "Delivery"]], selected: "Pick Up" %>
+      </td>
+      <td>
+        <%= f.select :ready, [["Yes", true ],["Not Yet", false]], selected: false %>
       </td>
       <td><%= f.submit "Add Product", class: "btn-primary" %></td>
     </tr>

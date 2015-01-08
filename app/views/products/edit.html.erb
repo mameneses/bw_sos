@@ -8,6 +8,7 @@
       <th>Price</th>
       <th>Discount</th>
       <th>Pick Up or Delivery?</th>
+      <th>Ready in store?</th>
       <th>Received?</th>
       <th>Receiving Date</th>
     </tr>
@@ -21,6 +22,9 @@
       <%= f.hidden_field :order_id, value: "#{@order.id}" %>
       <td> 
         <%= f.select :pickup_or_delivery, [["Pick Up", "Pick Up"],["Delivery", "Delivery"]], selected: "#{@product.pickup_or_delivery}" %>
+      </td>
+      <td>
+        <%= f.select :ready, [["Yes", true ],["Not Yet", false]], selected: "#{@product.ready}" %>
       </td>
       <td>
         <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{@product.picked_up}" %>
