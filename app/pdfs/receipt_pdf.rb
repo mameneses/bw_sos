@@ -37,17 +37,21 @@ class ReceiptPdf < Prawn::Document
     else
       text "Baby World"
     end
-    y_position = cursor - 20
-    bounding_box([0, y_position], :width => 200, :height => 100) do
-      text "Order for:"
+    y_position_name = cursor - 20
+    y_position_header = cursor + 58
+    bounding_box([360, y_position_header], :width => 200, :height => 100 ) do 
+      text "Order No. #{@order.id}"
+      text "Placed on #{@order.placed_date.strftime("%m/%d/%Y")} "
+    end
+    
+    bounding_box([0, y_position_name], :width => 200, :height => 100) do
       text " "
       text "#{@customer.first_name} #{@customer.last_name}", size: 12, style: :bold
       text "#{@customer.address}"
       text "#{@customer.city}, #{@customer.state} #{@customer.zip_code}"
       end
  
-    bounding_box([215, y_position], :width => 200, :height => 100) do
-      text " "
+    bounding_box([215, y_position_name], :width => 200, :height => 100) do
       text " "
       text " "
       text "Phone: #{number_to_phone(@customer.phone_num, area_code: true)}"

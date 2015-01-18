@@ -61,7 +61,7 @@
                     <strong><%= order.store_location %> </strong>
                   <% end %>
                 </td>
-                <td> <%= order.placed_date %> </td>
+                <td> <%= order.placed_date.strftime("%m/%d/%Y") %> </td>
                 <td> 
                   <% order.products.each do |product| %>
                     <p class="glyphicon glyphicon-tag"> <%= "#{product.company}" %> <%= "#{product.model_type}" %></p><br>
