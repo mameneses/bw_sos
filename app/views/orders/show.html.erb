@@ -108,11 +108,11 @@
       <p> Items total: <%= number_to_currency(@order.items_total) %> </p>
       <p> Tax: <%= number_to_currency(@order.tax) %> </p>
       <p> Total w/ tax: <%= number_to_currency(@order.total_with_tax) %> </p>
-      <p> Delivery: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "")}" %> </p>
+      <p> Delivery: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "", delimiter: "")}" %> </p>
       <p> Delivery w/ tax: <%= number_to_currency(@order.delivery_with_tax) %> </p>
-      <p> Assembly: $ <%= f.text_field :assembly, value: "#{ number_to_currency(@order.assembly, unit: "")}" %> </p>
+      <p> Assembly: $ <%= f.text_field :assembly, value: "#{ number_to_currency(@order.assembly, unit: "", delimiter: "")}" %> </p>
       <h4> Grand total: <%= number_to_currency(@order.grand_total) %> </h4>
-      <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "")}" %> </p>
+      <p> Deposit: $ <%= f.text_field :deposit, value: "#{ number_to_currency(@order.deposit, unit: "", delimiter: "")}" %> </p>
       <h3> Balance due: <%= number_to_currency(@order.balance_due) %> </h3>
       <p> Complete:  <%= f.select :complete, [["Yes",true],["No", false]], value:"#{@order.complete}" %> </p>
       <br>
