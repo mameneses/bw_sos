@@ -42,6 +42,7 @@ class ReceiptPdf < Prawn::Document
     bounding_box([360, y_position_header], :width => 200, :height => 100 ) do 
       text "Order No. #{@order.id}"
       text "Placed on #{@order.placed_date.strftime("%m/%d/%Y")} "
+      text "Placed by #{@order.placed_by}"
     end
     
     bounding_box([0, y_position_name], :width => 200, :height => 100) do
@@ -88,9 +89,9 @@ class ReceiptPdf < Prawn::Document
   end
  
   def product_rows
-    [['Company', 'Model', 'Description', "Price", "Discount"]] +
+    [['Company', 'Model', 'Description', "Price"]] +
       @products.map do |product|
-      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}","#{format_discount(product.discount)}"]
+      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}"]
     end
   end
 
