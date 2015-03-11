@@ -24,10 +24,10 @@
         <%= f.select :pickup_or_delivery, [["Pick Up", "Pick Up"],["Delivery", "Delivery"]], selected: "#{@product.pickup_or_delivery}" %>
       </td>
       <td>
-        <%= f.select :ready, [["Yes", true ],["Not Yet", false]], selected: "#{@product.ready}" %>
+        <%= f.select :ready, [["Yes", true ],["No", false]], selected: "#{@product.ready}" %>
       </td>
       <td>
-        <%= f.select :picked_up, [["Not yet", false],["Yes", true]], selected: "#{@product.picked_up}" %>
+        <%= f.select :picked_up, [["No", false],["Yes", true]], selected: "#{@product.picked_up}" %>
       </td>
       <td>
         <%= f.date_field :pick_up_date, value: "#{@product.pick_up_date}", style: "width: 138px;" %>

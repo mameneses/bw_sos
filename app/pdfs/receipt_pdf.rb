@@ -77,24 +77,22 @@ class ReceiptPdf < Prawn::Document
   end
  
   def table_content
-  text " "
-  text "Items", size: 12, style: :bold
+    text " "
+    text "Items", size: 12, style: :bold
     table product_rows do
       row(0).font_style = :bold
       self.header = true
       self.row_colors = ['DDDDDD', 'FFFFFF']
     end
-    y_position = cursor - 20
-    bounding_box([0, y_position], :width => 200, :height => 130) do
-      text "Items Total: #{number_to_currency(@order.items_total)}"
-      text "Tax: #{number_to_currency(@order.tax)}"
-      text "Total w/ Tax: #{number_to_currency(@order.total_with_tax)}"
-      text "Delivery w/ Tax: #{number_to_currency(@order.delivery_with_tax)}"
-      text "Assembly: #{number_to_currency(@order.assembly)}"
-      text "Grand Total: #{number_to_currency(@order.grand_total)}", size: 14, style: :bold
-      text "Desposit: #{number_to_currency(@order.deposit)}"
-      text "Balance Due: #{number_to_currency(@order.balance_due)}",size: 14, style: :bold
-    end
+    text " "
+    text "Items Total: #{number_to_currency(@order.items_total)}"
+    text "Tax: #{number_to_currency(@order.tax)}"
+    text "Total w/ Tax: #{number_to_currency(@order.total_with_tax)}"
+    text "Delivery w/ Tax: #{number_to_currency(@order.delivery_with_tax)}"
+    text "Assembly: #{number_to_currency(@order.assembly)}"
+    text "Grand Total: #{number_to_currency(@order.grand_total)}", size: 14, style: :bold
+    text "Desposit: #{number_to_currency(@order.deposit)}"
+    text "Balance Due: #{number_to_currency(@order.balance_due)}",size: 14, style: :bold
   end
 
   def format_discount (decimal)
@@ -113,6 +111,7 @@ class ReceiptPdf < Prawn::Document
   end
 
   def signature
+      text " "
       text "Confirmation of pickup"
       text "Customer Signature: ___________________________",size: 14, style: :bold
       text " "

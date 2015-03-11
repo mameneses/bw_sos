@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @product = Product.new
-    @products = @order.products
+    @products = @order.products.order(picked_up: :asc)
     @customer = @order.customer
 
     respond_to do |format|
