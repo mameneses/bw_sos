@@ -8,7 +8,7 @@
   <%= f.date_field :placed_date, value: "#{Date.today}"  %><br>
 
   <%= f.label :follow_up_date %>:
-  <%= f.date_field :follow_up_date, value: "#{Date.today + 14.days}"%><br>
+  <%= f.date_field :follow_up_date, value: "#{Date.today}"%><br>
 
   <%= f.label :store_location %>:
   <%= f.select :store_location, ["Oakland","San Bruno","San Rafael"], value:"Oakland" %><br>

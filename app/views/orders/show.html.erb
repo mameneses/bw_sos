@@ -99,7 +99,7 @@
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
   </div>
   <div class="col-sm-5">
-      <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:100%;" %> </p>
+      <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:100%; height:300px" %> </p>
       <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
       <p> Issue?: <%= f.select :issue,[["Yes",true],["No", false]], value:"#{@order.issue}" %> (See Notes for issue specifics) 
       </p>

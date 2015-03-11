@@ -94,7 +94,7 @@
 <% end %>
 <%= form_tag(products_path, method: "get") do %>
   <%= label_tag(:q, "Search for Products:") %>
-  <%= text_field_tag(:q, nil, placeholder:"Company or Model") %>
+  <%= text_field_tag(:q, nil, placeholder:"Company, Model or Description", style:"width:220px;") %>
   <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
 <% end %>
 <br>
