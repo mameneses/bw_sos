@@ -8,36 +8,33 @@ class ReceiptPdf < Prawn::Document
     @order = order
     @products = products
     header
-    gift_info
+    info
     table_content
     signature
     fine_print
   end
  
   def header
+    image "#{Rails.root}/app/assets/images/baby_world_logo.png", :width => 190
     if @order.store_location == "Oakland"
-      text "Baby World", size: 15, style: :bold
       text "4400 Telegraph Ave", size: 10
       text "Oakland, CA 94609", size: 10
       text "(510) 547-7040", size: 10
       text "http://www.babyworldonline.net", size: 10
       text "luz@babyworldonline.net", size: 10
     elsif @order.store_location == "San Bruno"
-      text "Baby World", size: 15, style: :bold
       text "556 San Mateo Ave", size: 10
       text "San Bruno, CA 94066", size: 10
       text "(650) 588-7644", size: 10
       text "http://www.babyworldonline.net", size: 10
       text "luz@babyworldonline.net", size: 10
     elsif @order.store_location == "San Rafael"
-      text "Baby World", size: 15, style: :bold
       text "514 4th St", size: 10
       text "San Rafael, CA 94901", size: 10
       text "(415) 456-5533", size: 10
       text "http://www.babyworldonline.net", size: 10
       text "luz@babyworldonline.net", size: 10
     else
-      text "Baby World", size: 15, style: :bold
       text "4400 Telegraph Ave", size: 10
       text "Oakland, CA 94609", size: 10
       text "(510) 547-7040", size: 10
@@ -67,12 +64,17 @@ class ReceiptPdf < Prawn::Document
     end
   end
 
-  def gift_info
+  def info
     if @order.purchased_by.length > 1
       text " "
       text "Gift", size: 12, style: :bold
       text "From: #{@order.purchased_by}"
       text "Note: '#{@order.gift_note}'"
+    end
+    if @order.notes.length > 1
+      text " "
+      text "Notes:", size: 12, style: :bold
+      text " #{@order.notes}"
     end
   end
  
@@ -104,9 +106,9 @@ class ReceiptPdf < Prawn::Document
   end
  
   def product_rows
-    [['Company', 'Model', 'Description', "Price"]] +
+    [['Company', 'Model', 'Description', "Price", "Received?"]] +
       @products.map do |product|
-      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}"]
+      [product.company, product.model_type, product.description, "#{number_to_currency(product.price)}", product.picked_up ? "Yes" : "No"]
     end
   end
 
