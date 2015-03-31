@@ -44,6 +44,10 @@ gem 'prawn-print', :git => 'git://github.com/barsoom/prawn-print.git'
 
 gem 'money-rails'
 
+# group :development, :test do
+#   gem 'rspec-rails'
+# end
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

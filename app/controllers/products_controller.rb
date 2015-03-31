@@ -30,24 +30,8 @@ class ProductsController < ApplicationController
       redirect_to "/orders/#{product_order_id_params[:order_id]}"
     else
       @order.update(updated_by:"#{current_user.first_name}")
-      @product.errors.clear
       @order.products << @product
-      @order = @product.orders.first
-      total = @order.items_total + (@product.price - (@product.price * @product.discount))
-      location = @order.store_location
-      sales_tax = 0.09
-      if  location == "San Rafael"
-        sales_tax = Settings.san_rafael_tax
-      elsif location == "San Bruno"
-        sales_tax = Settings.san_bruno_tax
-      else location == "Oakland"
-        sales_tax = Settings.oakland_tax
-      end
-      tax = total * sales_tax.to_f
-      total_w_tax = total + tax
-      grand_total = total_w_tax + @order.delivery_with_tax + @order.assembly
-      balance_due = grand_total - @order.deposit
-      @order.update(items_total: total, tax: tax, total_with_tax: total_w_tax, grand_total: grand_total, balance_due: balance_due)
+      @product.add_item_to_order
       redirect_to "/orders/#{product_order_id_params[:order_id]}"
     end
   end  

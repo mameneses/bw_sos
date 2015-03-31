@@ -50,19 +50,7 @@ class OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     @order.update(order_params)
-     location = @order.store_location
-      sales_tax = 0.09
-      if  location == "San Rafael"
-        sales_tax = Settings.san_rafael_tax
-      elsif location == "San Bruno"
-        sales_tax = Settings.san_bruno_tax
-      else location == "Oakland"
-        sales_tax = Settings.oakland_tax
-      end
-    delivery_w_tax = @order.delivery * sales_tax + @order.delivery
-    grand_total = @order.total_with_tax + delivery_w_tax + @order.assembly
-    balance_due = grand_total - @order.deposit
-    @order.update(grand_total: grand_total, balance_due: balance_due, delivery_with_tax: delivery_w_tax )
+    @order.update_totals
     if params[:follow_up_page]
       redirect_to "/orders"
     else

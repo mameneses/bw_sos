@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   has_and_belongs_to_many :products
   after_initialize :init
   before_destroy :destroy_products
+
   def init
     self.items_total ||= 0
     self.tax ||= 0
@@ -21,5 +22,21 @@ class Order < ActiveRecord::Base
     self.products.each do |product|
       product.destroy
     end
+  end
+
+  def update_totals
+    location = self.store_location
+      sales_tax = 0.09
+      if  location == "San Rafael"
+        sales_tax = Settings.san_rafael_tax
+      elsif location == "San Bruno"
+        sales_tax = Settings.san_bruno_tax
+      else location == "Oakland"
+        sales_tax = Settings.oakland_tax
+      end
+    delivery_w_tax = self.delivery * sales_tax + self.delivery
+    grand_total = self.total_with_tax + delivery_w_tax + self.assembly
+    balance_due = grand_total - self.deposit
+    self.update(grand_total: grand_total, balance_due: balance_due, delivery_with_tax: delivery_w_tax )
   end
 end
