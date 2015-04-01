@@ -1,5 +1,4 @@
 class Product < ActiveRecord::Base
-  has_and_belongs_to_many :customers
   has_and_belongs_to_many :orders
   validates :price, presence: true
   before_create :capitalize_company
@@ -12,10 +11,12 @@ class Product < ActiveRecord::Base
   end
 
   def remove_item_from_order
-    @order = self.orders.first
-    remove_item
-    set_tax
-    update_order
+    if self.orders.length > 0
+      @order = self.orders.first
+      remove_item
+      set_tax
+      update_order
+    end
   end
 
   def add_item_to_order
@@ -26,8 +27,12 @@ class Product < ActiveRecord::Base
   end
 
   def capitalize_company
-    self.company = self.company.capitalize
+    if self.company
+      self.company = self.company.capitalize
+    end
   end
+
+  private
 
   def set_tax
     location = @order.store_location

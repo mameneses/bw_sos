@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
 
   def index
     if params[:q]
-      @customers = Customer.where("LOWER(first_name) LIKE LOWER(?)", "%#{params[:q]}%").concat(Customer.where("LOWER(last_name) LIKE LOWER(?)", "%#{params[:q]}%")).uniq
+      @customers = Customer.query_search(params[:q])
     else
       @customers = Customer.order(created_at: :desc).first(15)
     end
