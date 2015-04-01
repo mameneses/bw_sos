@@ -8,8 +8,7 @@ class ProductsController < ApplicationController
     end
 
     if params[:q]
-      query = params[:q]
-      @products = Product.where("LOWER(company) LIKE LOWER(?)", "%#{query}%").order(created_at: :desc).concat(Product.where("LOWER(model_type) LIKE LOWER(?)", "%#{query}%")).concat(Product.where("LOWER(description) LIKE LOWER(?)", "%#{query}%")).uniq
+      @products = Product.query_search(params[:q])
     else
       @products = Product.order(created_at: :desc).first(15)
     end

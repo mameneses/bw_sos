@@ -24,6 +24,14 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.follow_up_today
+    where(follow_up_date: Date.today).order(updated_at: :asc)
+  end
+
+  def self.follow_up_by_date(date)
+    where(follow_up_date: date).order(updated_at: :asc)
+  end
+
   def update_totals
     location = self.store_location
       sales_tax = 0.09

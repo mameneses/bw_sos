@@ -4,7 +4,7 @@ class CustomersController < ApplicationController
     if params[:q]
       @customers = Customer.query_search(params[:q])
     else
-      @customers = Customer.order(created_at: :desc).first(15)
+      @customers = Customer.recent_short_list
     end
   end
 

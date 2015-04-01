@@ -6,7 +6,7 @@ class Customer < ActiveRecord::Base
     where("LOWER(first_name) LIKE LOWER(?)", "%#{name}%").concat(Customer.where("LOWER(last_name) LIKE LOWER(?)", "%#{name}%")).uniq
   end
 
-  def self.recent
+  def self.recent_short_list
     order(created_at: :desc).first(15)
   end
 

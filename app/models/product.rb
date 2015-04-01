@@ -32,6 +32,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def self.query_search(query)
+    where("LOWER(company) LIKE LOWER(?)", "%#{query}%").order(created_at: :desc).concat(Product.where("LOWER(model_type) LIKE LOWER(?)", "%#{query}%")).concat(Product.where("LOWER(description) LIKE LOWER(?)", "%#{query}%")).uniq
+  end
+
   private
 
   def set_tax

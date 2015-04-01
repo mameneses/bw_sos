@@ -1,9 +1,8 @@
-require 'spec_helper'
+
 describe Customer do
   it 'destroys dependent orders when destroyed' do
     customer = Customer.create
     order = Order.create
-
     customer.orders << order
 
     expect { customer.destroy }.to change {Order.count}.by(-1)
@@ -15,15 +14,15 @@ describe Customer do
     @johnson = Customer.create( first_name: 'Val', last_name: 'Johnson', email: 'jjohnson@example.com')
   end
 
-  it 'returns query results that match' do
+  it 'returns query results that match first or last name' do
     expect(Customer.query_search("J")).to eq [@smith,@johnson ]
   end
 
-  it 'excludes query results that do not match' do
+  it 'excludes query results that do not match first or last name' do
     expect(Customer.query_search("J")).not_to include @tyler
   end
 
-  it 'returns recently create' do
-
+  it 'returns recently created ordered by created at' do
+    expect(Customer.recent_short_list).to eq [@johnson,@tyler,@smith]
   end
 end

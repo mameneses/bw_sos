@@ -2,10 +2,10 @@ class OrdersController < ApplicationController
 
   def index
     if params[:date]
-      @follow_ups = Order.where(follow_up_date: params[:date]).order(updated_at: :asc)
+      @follow_ups = Order.follow_up_by_date(params[:date])
       @follow_up_date = params[:date]
     else  
-      @follow_ups = Order.where(follow_up_date: Date.today).order(updated_at: :asc)
+      @follow_ups = Order.follow_up_today
     end
     @orders = Order.order(created_at: :desc)
     @pending_issues = Order.where(issue: true).order(updated_at: :desc)
