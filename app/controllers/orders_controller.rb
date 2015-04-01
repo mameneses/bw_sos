@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
       @follow_ups = Order.follow_up_today
     end
     @orders = Order.order(created_at: :desc)
-    @pending_issues = Order.where(issue: true).order(updated_at: :desc)
+    @pending_issues = Order.issues
   end
 
   def show

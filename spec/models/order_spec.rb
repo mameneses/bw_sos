@@ -28,8 +28,8 @@ describe Order do
 
   before :each do
     @today = Order.create(follow_up_date: Date.today)
-    @tomorrow = Order.create( follow_up_date: Date.today.next_day)
-    @today2 = Order.create( follow_up_date: Date.today)
+    @tomorrow = Order.create( follow_up_date: Date.today.next_day, issue: true)
+    @today2 = Order.create( follow_up_date: Date.today, issue: true)
   end
 
   it 'returns query results that match follow up date query' do
@@ -46,5 +46,13 @@ describe Order do
 
   it 'excludes query results that do not match todays date' do
     expect(Order.follow_up_today).not_to include @tomorrow
+  end
+
+  it 'returns results with issues in descending order' do
+    expect(Order.issues).to eq [@today2, @tomorrow ]
+  end
+
+   it 'excludes results without issues' do
+    expect(Order.issues).not_to include @today
   end
 end
