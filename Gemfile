@@ -46,7 +46,8 @@ gem 'money-rails'
 
 group :development, :test do
   gem 'rspec-rails', "~> 3.1.0"
-end
+  gem 'factory_girl', "~> 4.0"
+end 
 
 # Use unicorn as the app server
 # gem 'unicorn'

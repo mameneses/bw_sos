@@ -16,6 +16,7 @@ class Order < ActiveRecord::Base
     self.balance_due ||= 0
     self.items_total ||= 0
     self.complete = false if self.complete.nil?
+    self.charge_tax ||=true if self.charge_tax.nil?
   end
 
   def destroy_products
@@ -38,17 +39,24 @@ class Order < ActiveRecord::Base
   
   def update_totals
     location = self.store_location
-      sales_tax = 0.09
-      if  location == "San Rafael"
-        sales_tax = Settings.san_rafael_tax
-      elsif location == "San Bruno"
-        sales_tax = Settings.san_bruno_tax
-      else location == "Oakland"
-        sales_tax = Settings.oakland_tax
-      end
+    sales_tax = 0.09
+    if  location == "San Rafael"
+      sales_tax = Settings.san_rafael_tax
+    elsif location == "San Bruno"
+      sales_tax = Settings.san_bruno_tax
+    else location == "Oakland"
+      sales_tax = Settings.oakland_tax
+    end
+    if !self.charge_tax
+      total_sales_tax = 0
+    else
+      total_sales_tax = sales_tax
+    end
+    tax = self.items_total * total_sales_tax
+    total_with_tax = self.items_total + (self.items_total * total_sales_tax)
     delivery_w_tax = self.delivery * sales_tax + self.delivery
-    grand_total = self.total_with_tax + delivery_w_tax + self.assembly
+    grand_total = total_with_tax + delivery_w_tax + self.assembly
     balance_due = grand_total - self.deposit
-    self.update(grand_total: grand_total, balance_due: balance_due, delivery_with_tax: delivery_w_tax )
+    self.update(tax: tax, total_with_tax: total_with_tax, grand_total: grand_total, balance_due: balance_due, delivery_with_tax: delivery_w_tax )
   end
 end

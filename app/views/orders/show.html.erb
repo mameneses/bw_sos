@@ -106,6 +106,7 @@
   </div>
   <div class="col-sm-4">
       <p> Items total: <%= number_to_currency(@order.items_total) %> </p>
+      <p> Charge Tax?:  <%= f.select :charge_tax, [["Yes",true],["No", false]], value:"#{@order.charge_tax}" %> </p>
       <p> Tax: <%= number_to_currency(@order.tax) %> </p>
       <p> Total w/ tax: <%= number_to_currency(@order.total_with_tax) %> </p>
       <p> Delivery/Shipping: $ <%= f.text_field :delivery, value: "#{number_to_currency(@order.delivery, unit: "", delimiter: "")}" %> </p>

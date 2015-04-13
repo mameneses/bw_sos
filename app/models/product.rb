@@ -11,12 +11,10 @@ class Product < ActiveRecord::Base
   end
 
   def remove_item_from_order
-    if self.orders.length > 0
-      @order = self.orders.first
-      remove_item
-      set_tax
-      update_order
-    end
+    @order = self.orders.first
+    remove_item
+    set_tax
+    update_order
   end
 
   def add_item_to_order
@@ -41,12 +39,15 @@ class Product < ActiveRecord::Base
   def set_tax
     location = @order.store_location
     sales_tax = 0.09
-   if location == "San Rafael"
+    if location == "San Rafael"
       sales_tax = Settings.san_rafael_tax
     elsif location == "San Bruno"
       sales_tax = Settings.san_bruno_tax
     else location == "Oakland"
       sales_tax = Settings.oakland_tax
+    end
+    if @order.charge_tax == false
+      sales_tax = 0
     end
     @tax = @total * sales_tax.to_f
   end
