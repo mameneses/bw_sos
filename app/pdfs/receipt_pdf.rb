@@ -21,25 +21,25 @@ class ReceiptPdf < Prawn::Document
       text "Oakland, CA 94609", size: 10
       text "(510) 547-7040", size: 10
       text "http://www.babyworldonline.net", size: 10
-      text "luz@babyworldonline.net", size: 10
+      text "orders@babyworldonline.net", size: 10
     elsif @order.store_location == "San Bruno"
       text "556 San Mateo Ave", size: 10
       text "San Bruno, CA 94066", size: 10
       text "(650) 588-7644", size: 10
       text "http://www.babyworldonline.net", size: 10
-      text "luz@babyworldonline.net", size: 10
+      text "orders@babyworldonline.net", size: 10
     elsif @order.store_location == "San Rafael"
       text "514 4th St", size: 10
       text "San Rafael, CA 94901", size: 10
       text "(415) 456-5533", size: 10
       text "http://www.babyworldonline.net", size: 10
-      text "luz@babyworldonline.net", size: 10
+      text "orders@babyworldonline.net", size: 10
     else
       text "4400 Telegraph Ave", size: 10
       text "Oakland, CA 94609", size: 10
       text "(510) 547-7040", size: 10
       text "http://www.babyworldonline.net", size: 10
-      text "luz@babyworldonline.net", size: 10
+      text "orders@babyworldonline.net", size: 10
     end
     y_position_name = cursor - 20
     y_position_header = cursor + 58
@@ -70,11 +70,6 @@ class ReceiptPdf < Prawn::Document
       text "Gift", size: 12, style: :bold
       text "From: #{@order.purchased_by}"
       text "Note: '#{@order.gift_note}'"
-    end
-    if @order.notes.length > 1
-      text " "
-      text "Notes:", size: 12, style: :bold
-      text " #{@order.notes}"
     end
   end
  
