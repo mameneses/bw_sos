@@ -74,7 +74,7 @@ class ReceiptPdf < Prawn::Document
       text "From: #{@order.purchased_by}"
       text "Note: '#{@order.gift_note}'"
     end
-    if @order.customer_notes.length > 0
+    if @order.customer_notes && @order.customer_notes.length > 0 
       text " "
       text "Notes:", size:12, style: :bold 
       text "#{@order.customer_notes}"
