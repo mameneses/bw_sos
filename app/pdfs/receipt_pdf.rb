@@ -15,7 +15,10 @@ class ReceiptPdf < Prawn::Document
   end
  
   def header
-    image "#{Rails.root}/app/assets/images/baby_world_logo.png", :width => 190
+    bounding_box([-5, cursor], :width => 200) do
+      image "#{Rails.root}/app/assets/images/baby_world_logo.png", :width => 190
+    end
+
     if @order.store_location == "Oakland"
       text "4400 Telegraph Ave", size: 10
       text "Oakland, CA 94609", size: 10
@@ -42,8 +45,8 @@ class ReceiptPdf < Prawn::Document
       text "orders@babyworldonline.net", size: 10
     end
     y_position_name = cursor - 20
-    y_position_header = cursor + 58
-    bounding_box([360, y_position_header], :width => 200, :height => 60 ) do 
+    y_position_header = cursor + 100
+    bounding_box([380, y_position_header], :width => 200, :height => 60 ) do 
       text "Order No. #{@order.id}"
       text "Placed on #{@order.placed_date.strftime("%m/%d/%Y")} "
       text "Placed by #{@order.placed_by}"
@@ -65,11 +68,16 @@ class ReceiptPdf < Prawn::Document
   end
 
   def info
-    if @order.purchased_by.length > 1
+    if @order.purchased_by.length > 0
       text " "
       text "Gift", size: 12, style: :bold
       text "From: #{@order.purchased_by}"
       text "Note: '#{@order.gift_note}'"
+    end
+    if @order.customer_notes.length > 0
+      text " "
+      text "Notes:", size:12, style: :bold 
+      text "#{@order.customer_notes}"
     end
   end
  

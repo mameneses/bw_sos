@@ -95,11 +95,12 @@
       <p> Follow: <%= f.date_field :follow_up_date, value: "#{@order.follow_up_date}"%></p>
       <h4>Gift Info</h4>
       <p> Purchased by: <%= f.text_field :purchased_by, value: "#{@order.purchased_by}" %> </p>
-      <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}" %> </p>
+      <p> Gift Note: <br><%= f.text_area :gift_note, value: "#{@order.gift_note}", style:"width:100%" %> </p>
       <%= f.hidden_field :updated_by, value:"#{current_user.first_name}" %>
   </div>
   <div class="col-sm-5">
-      <p> Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:100%; height:300px" %> </p>
+      <p> Internal Notes: <br> <%= f.text_area :notes, value: "#{@order.notes}", style:"width:100%; height:230px", placeholder:"This section is for: \n - Buyer notes\n - Communications with customer (What? When?) \n - Issues" %> </p>
+      <p> Customer Notes: <br> <%= f.text_area :customer_notes, value: "#{@order.customer_notes}", style:"width:100%; height:70px", placeholder:"*** This will print out on order receipt for customer to see ***" %> </p>
       <h5> Last updated by <%= @order.updated_by %> at <%= @order.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %Z on %m/%d/%Y") %> </h5>
       <p> Issue?: <%= f.select :issue,[["Yes",true],["No", false]], value:"#{@order.issue}" %> (See Notes for issue specifics) 
       </p>
