@@ -1,11 +1,11 @@
 defaults: &defaults
-  oakland_tax: 0.09
+  oakland_tax: 0.095
   san_bruno_tax: 0.09
   san_rafael_tax: 0.0925
 
 development:
   <<: *defaults
-  oakland_tax: 0.09
+  oakland_tax: 0.095
   san_bruno_tax: 0.09
   san_rafael_tax: 0.0925
 test:
