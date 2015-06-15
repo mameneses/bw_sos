@@ -1,5 +1,60 @@
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-4">
+    <%= form_tag(orders_path, method: "get") do %>
+      <%= label_tag(:order_number, "Find by Order Number:") %>
+      <%= text_field_tag(:order_number, nil, placeholder:"Ex: 170", style:"width:220px;") %>
+      <%= submit_tag("Find", class:"btn btn-sm btn-primary") %>
+    <% end %>
+  </div>
+  <div class="col-sm-8">
+    <table class="table table-striped">
+      <tr>
+        <th>Order No.</th>
+        <th>Customer</th>
+        <th>Placed Date</th>
+        <th>Deposit</th>
+        <th>Balance Due</th>
+        <th>Complete</th>
+        <th></th>
+      </tr>
+
+      <% if @order %>
+        <tr>
+          <td><%= @order.id %></td>
+          <td> <%= @order.customer.first_name %> <%= @order.customer.last_name %></td>  
+          <td><%= @order.placed_date.strftime("%m/%d/%Y") %></td>
+          <td><%= number_to_currency(@order.deposit) %></td>
+          <td><%= number_to_currency(@order.balance_due) %></td>
+          <% if @order.complete %>
+            <td> Yes </td>
+          <% else %>
+            <td> No </td>
+          <% end %> 
+          <td>
+            <%= link_to(order_path(@order)) do %>
+            <div class="btn btn-default">
+              <span class="glyphicon glyphicon-list-alt"></span> Go to Order
+            </div>
+              
+            <% end %>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td>No results for "<%= @search %>"</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>  
+    </table>
+  </div>
+  <br>
+</div>
+<div class="row">
     <h2><span class="glyphicon glyphicon-earphone"></span> Follow Ups for
     <% if @follow_up_date %>
       <% if Date.parse(@follow_up_date) == Date.today.in_time_zone("Pacific Time (US & Canada)") %>
@@ -11,14 +66,15 @@
       Today 
     <% end %>
     </h2>
-  </div>
-  <div class="col-sm-6">
+
     <%= form_tag(orders_path, method: "get") do %>
       <%= date_field_tag(:date, "Follow Ups for:", value: "#{@follow_up_date ? @follow_up_date : Date.today}") %>
       <%= submit_tag("Go To Folloup Date", class:"btn btn-sm btn-primary") %>
     <% end %>
-  </div>
+
 </div>
+
+
 <div class="row" >
   <table class="table">
     <tr>
@@ -45,7 +101,7 @@
             </td>
             <td> 
               <%= form_for order, as: :order, url: "/orders/#{order.id}", method: :put do |f| %>
-                <%= hidden_field_tag "follow_up_page", "true" %>
+                <% hidden_field_tag "follow_up_page", "true" %>
                 <%= f.text_area :notes, value: "#{order.notes}", style:"width:300px; height:28px" %>
                 <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
               <% end %>
@@ -62,6 +118,9 @@
       <td>
         <h4> No Follow Ups </h4>
       <td>
+      <td></td>
+      <td></td>
+      <td></td>
     <tr>
   <% end %>
   </table>
@@ -94,7 +153,7 @@
             </td>
             <td> 
               <%= form_for order, as: :order, url: "/orders/#{order.id}", method: :put do |f| %>
-                <%= hidden_field_tag "follow_up_page", "true" %>
+                <% hidden_field_tag "follow_up_page", "true" %>
                 <%= f.text_area :notes, value: "#{order.notes}", style:"width:300px; height:28px" %>
                 <%= f.submit "Make Note", class:"btn btn-sm btn-default" %>
               <% end %>

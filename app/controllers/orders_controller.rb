@@ -7,6 +7,12 @@ class OrdersController < ApplicationController
     else  
       @follow_ups = Order.follow_up_today
     end
+
+    if params[:order_number]
+      @search = params[:order_number]
+      @order = Order.where(id: params[:order_number]).first
+    end
+
     @orders = Order.order(created_at: :desc)
     @pending_issues = Order.issues
   end
