@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
     if params[:q]
       @products = Product.query_search(params[:q])
     else
-      @products = Product.order(created_at: :desc).first(15)
+      @products = Product.order(created_at: :desc).first(150)
     end
   end
 

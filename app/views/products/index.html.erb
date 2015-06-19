@@ -98,6 +98,7 @@
   <%= submit_tag("Search", class:"btn btn-sm btn-primary") %>
 <% end %>
 <br>
+<h3>Pending Orders</h3>
 <table class="table table-striped">
   <tr>
     <th>Company</th>
@@ -110,6 +111,41 @@
   </tr>
   <% @products.each do |product| %>
     <% if product.orders.first.complete != true %>
+    <tr>
+      <td><span class="glyphicon glyphicon-tag"></span> <%= product.company %></td>
+      <td><%= product.model_type %></td>
+      <td><%= product.description%></td>
+      <td><%= number_to_currency(product.price) %></td>
+      <td><%= product.picked_up ? "Yes" : "Not Yet" %></td>
+      <td><%= product.pick_up_date != nil ? product.pick_up_date.strftime("%m/%d/%Y") : "" %></td>
+      <% orders = product.orders %>
+        <% if orders.length > 0 %>
+          <% orders.each do |order| %>
+            <td>
+              <%= link_to(order) do %>
+                <span class="glyphicon glyphicon-list-alt"></span>
+                <%= order.customer.first_name %> <%= order.customer.last_name %> - <%= order.store_location %>
+              <% end %>
+            </td>
+        <% end %>
+      <% end %>
+    <% end %>
+    </tr>
+  <% end %>
+</table>
+<h3>Completed Orders</h3>
+<table class="table table-striped">
+  <tr>
+    <th>Company</th>
+    <th>Model</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Picked Up?</th>
+    <th>Pick Up Date</th>
+    <th>Orders</th>
+  </tr>
+  <% @products.each do |product| %>
+    <% if product.orders.first.complete == true %>
     <tr>
       <td><span class="glyphicon glyphicon-tag"></span> <%= product.company %></td>
       <td><%= product.model_type %></td>
