@@ -52,9 +52,9 @@ class Order < ActiveRecord::Base
     else
       total_sales_tax = sales_tax
     end
-    tax = self.items_total * total_sales_tax
-    total_with_tax = self.items_total + (self.items_total * total_sales_tax)
-    delivery_w_tax = self.delivery * sales_tax + self.delivery
+    tax = (self.items_total * total_sales_tax).round(2)
+    total_with_tax = self.items_total + tax
+    delivery_w_tax = (self.delivery * sales_tax).round(2) + self.delivery
     grand_total = total_with_tax + delivery_w_tax + self.assembly
     balance_due = grand_total - self.deposit
     self.update(tax: tax, total_with_tax: total_with_tax, grand_total: grand_total, balance_due: balance_due, delivery_with_tax: delivery_w_tax )

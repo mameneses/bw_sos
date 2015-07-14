@@ -49,15 +49,15 @@ class Product < ActiveRecord::Base
     if @order.charge_tax == false
       sales_tax = 0
     end
-    @tax = @total * sales_tax.to_f
+    @tax = (@total * sales_tax.to_f).round(2)
   end
 
   def add_item
-    @total = @order.items_total + (self.price - (self.price * self.discount))
+    @total = @order.items_total + (self.price - (self.price * self.discount).round(2))
   end
 
   def remove_item
-    @total = @order.items_total - (self.price - (self.price * self.discount))
+    @total = @order.items_total - (self.price - (self.price * self.discount).round(2))
   end
 
   def update_order
