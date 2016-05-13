@@ -51,4 +51,10 @@
         <% end %>
         </table>
       </div>
+      <div>
+        <div> All customers emails </div>
+        <% @all_customers_emails.each do |email| %>
+          <span><%= email %>,</span>
+        <% end %>
+      </div>
     </div>

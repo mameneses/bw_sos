@@ -6,6 +6,7 @@ class CustomersController < ApplicationController
     else
       @customers = Customer.recent_short_list
     end
+      @all_customers_email = Customer.pluck(:email)
   end
 
   def show
