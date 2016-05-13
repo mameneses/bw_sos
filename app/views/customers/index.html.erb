@@ -54,7 +54,9 @@
       <div>
         <div> All customers emails </div>
         <% @all_customers_email.each do |email| %>
-          <span><%= email %>,</span>
+          <% if email != ""%>
+            <span><%= email %>,</span>
+          <% end %>
         <% end %>
       </div>
     </div>
